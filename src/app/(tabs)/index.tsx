@@ -458,12 +458,12 @@ const ExploreTab = () => {
                                             </Button>
 
                                             <Button
-                                                className="flex-[2] rounded-2xl h-14 bg-primary-600 shadow-soft-2"
+                                                className="flex-1 rounded-2xl h-14 bg-primary-600 shadow-soft-2"
                                                 onPress={handleAddToItinerary}
                                                 isDisabled={!selectedLandmark.is_verified}
                                             >
-                                                <ButtonIcon as={MapPin} className="mr-2" />
-                                                <ButtonText className="font-bold">{selectedLandmark.is_verified ? 'Add to Itinerary' : 'Not Verified'}</ButtonText>
+                                                <ButtonIcon as={MapPin} />
+                                                <ButtonText className="font-bold pr-1">{selectedLandmark.is_verified ? 'Add to Itinerary' : 'Not Verified'}</ButtonText>
                                             </Button>
                                         </HStack>
 
