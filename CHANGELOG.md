@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Improved the layout of the Itinerary Bottom Sheet by adding proper icons, labels, and increasing text sizes for Stops, Distance, and Duration markers.
-
+- Added a 'Stay' label for the duration a stop to make it less confusing for the user.
+- Added an Icon on the stop municipality to make it more visually appealing.
 
 ## 1.0
 

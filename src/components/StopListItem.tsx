@@ -64,23 +64,23 @@ const StopListItem = ({
                     </HStack>
 
                     <HStack space="xs" className="items-center">
+                        <Icon as={MapPin} size="sm" className="text-typography-400" />
                         <Text
-                            size="sm"
                             className="text-typography-400"
                             numberOfLines={1}
                             ellipsizeMode="tail"
+                            size="sm"
                         >
                             {isPersonal ? "Custom" : landmark.municipality}
                         </Text>
                         {formattedDuration && (
                             <>
-                                <Box className="w-1 h-1 rounded-full bg-outline-300" />
-                                <HStack space="sm" className="items-center">
-                                    <Icon as={Clock} size="xs" className="text-typography-400" />
-                                    <Text size="sm" className="text-typography-400">
-                                        {formattedDuration}
-                                    </Text>
-                                </HStack>
+                                <Icon as={Clock} size="sm" className="text-typography-400" />
+                                <Text className="text-typography-400"
+                                    size="sm"
+                                >
+                                    Stay: {formattedDuration}
+                                </Text>
                             </>
                         )}
                     </HStack>
