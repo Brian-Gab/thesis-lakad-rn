@@ -22,12 +22,7 @@ const ItineraryLayout = () => {
                     headerTitle: 'Add Stops'
                 }}
             />
-            <Stack.Screen
-                name='[id]/info'
-                options={{
-                    headerTitle: ''
-                }}
-            />
+
         </Stack>
     )
 }

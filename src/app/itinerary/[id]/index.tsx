@@ -27,6 +27,7 @@ import { useToastNotification } from '@/src/hooks/useToastNotification';
 import { useUserLocation } from '@/src/hooks/useUserLocation';
 
 // Refactored Sub-components
+import { ItineraryInfoModal } from '@/src/components/itinerary/ItineraryInfoModal';
 import { MapControls } from '@/src/components/itinerary/MapControls';
 import { NavigatingModeBottomSheet } from '@/src/components/itinerary/NavigatingModeBottomSheet';
 import { NavigatingModeMapView } from '@/src/components/itinerary/NavigatingModeMapView';
@@ -50,6 +51,7 @@ export default function ItineraryView() {
     const router = useRouter();
     const { showToast } = useToastNotification();
     const [isCardViewOpened, setIsCardViewOpened] = useState(false)
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
     const [localStops, setLocalStops] = useState<ItineraryWithStops['stops']>([])
     const queryClient = useQueryClient()
     const { session } = useAuthStore();
@@ -183,10 +185,7 @@ export default function ItineraryView() {
                 options={{
                     headerRight: () => (
                         <Button variant="link"
-                            onPress={() => router.navigate({
-                                pathname: '/itinerary/[id]/info',
-                                params: { id: itinerary.id }
-                            })}
+                            onPress={() => setIsInfoModalOpen(true)}
                             action='secondary'
                         >
                             <ButtonIcon as={Edit} />
@@ -208,6 +207,12 @@ export default function ItineraryView() {
                     />
                 </Box>
             )}
+
+            <ItineraryInfoModal
+                isOpen={isInfoModalOpen}
+                onClose={() => setIsInfoModalOpen(false)}
+                itineraryId={itinerary.id}
+            />
 
             <VStack className='flex-1'>
                 <MapView
