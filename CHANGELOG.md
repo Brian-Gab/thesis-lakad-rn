@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed an issue where See all reviews button was not showing the arrow icon.
 - Fixed an issue where the admin analytics was not updating after updating a landmark.
 - Fixed an issue where pasalubong centers are not searchable after visiting AGAM screen.
+- Fixed an issue where completed stops content disappear on reorder screen
 
 ### Changed
 - Improved the layout of the Itinerary Bottom Sheet by adding proper icons, labels, and increasing text sizes for Stops, Distance, and Duration markers.

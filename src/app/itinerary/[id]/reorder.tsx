@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { Check, Clock, GripVertical } from 'lucide-react-native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import DraggableFlatList, {
     DragEndParams,
@@ -157,6 +157,62 @@ const ReorderScreen = () => {
         );
     }, [itinerary]);
 
+    const pendingStops = useMemo(() => itinerary?.stops.filter(stop => !stop.visited_at) ?? [], [itinerary]);
+    const completedStops = useMemo(() => itinerary?.stops.filter(stop => !!stop.visited_at) ?? [], [itinerary]);
+
+    const totalDistanceWithUser = useMemo(() => (itinerary?.distance ?? 0) + distanceToNextStop, [itinerary, distanceToNextStop]);
+
+    const HeaderComponent = useCallback(() => (
+        <VStack space='md' >
+            <VStack>
+                <Heading className='text-center'>{itinerary?.name}</Heading>
+                <HStack space='sm' className='items-center justify-center'>
+                    <Icon as={Clock} size='xs' className='text-typography-400' />
+                    <Text size='sm' className='text-typography-500'>
+                        {itinerary?.stops.length} Stops • {pendingStops.length} Pending
+                    </Text>
+                </HStack>
+                <VStack space='xs' className='items-center'>
+                    <Text className='text-typography-400 text-center'>
+                        Loop Distance: {formatDistance(itinerary?.distance ?? 0)}
+                    </Text>
+                    {distanceToNextStop > 0 && (
+                        <Text size='xs' className='text-typography-500 text-center italic'>
+                            Est. Route + First Stop: {formatDistance(totalDistanceWithUser)}
+                        </Text>
+                    )}
+                </VStack>
+            </VStack>
+            {completedStops.length > 0 && (
+                <>
+                    <Box className="px-4 py-2 bg-background-50 ">
+                        <Text size="xs" className="uppercase font-bold text-typography-400">Completed Stops</Text>
+                    </Box>
+                    <VStack
+                        className='p-4'
+                        space='md'
+                    >
+                        {completedStops.map((stop, idx) => {
+                            const displayNumber = idx + 1
+                            return (
+                                <ReorderListItem
+                                    key={stop.id}
+                                    displayNumber={displayNumber}
+                                    isVisited={true}
+                                    landmark={stop.place}
+                                />
+                            )
+                        })}
+                    </VStack>
+                </>
+            )}
+
+            <Box className="p-2 bg-background-50">
+                <Text size="xs" className="uppercase font-bold text-typography-400">Drag to Reorder Stops</Text>
+            </Box>
+        </VStack>
+    ), [itinerary, distanceToNextStop, pendingStops, completedStops, totalDistanceWithUser]);
+
     if (isLoading) return <LoadingModal isShown={true} />;
     if (!itinerary) return <View className="flex-1 items-center justify-center"><Text>Itinerary not found</Text></View>;
 
@@ -303,10 +359,7 @@ const ReorderScreen = () => {
                 return "";
         }
     }
-    const pendingStops = itinerary.stops.filter(stop => !stop.visited_at);
-    const completedStops = itinerary.stops.filter(stop => !!stop.visited_at);
 
-    const totalDistanceWithUser = itinerary.distance + distanceToNextStop;
 
     return (
         <>
@@ -320,56 +373,7 @@ const ReorderScreen = () => {
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
                 contentContainerClassName='px-4 pt-4 pb-32'
-                ListHeaderComponent={
-                    <VStack space='md' >
-                        <VStack>
-                            <Heading className='text-center'>{itinerary.name}</Heading>
-                            <HStack space='sm' className='items-center justify-center'>
-                                <Icon as={Clock} size='xs' className='text-typography-400' />
-                                <Text size='sm' className='text-typography-500'>
-                                    {itinerary.stops.length} Stops • {pendingStops.length} Pending
-                                </Text>
-                            </HStack>
-                            <VStack space='xs' className='items-center'>
-                                <Text className='text-typography-400 text-center'>
-                                    Loop Distance: {formatDistance(itinerary.distance)}
-                                </Text>
-                                {distanceToNextStop > 0 && (
-                                    <Text size='xs' className='text-typography-500 text-center italic'>
-                                        Est. Route + First Stop: {formatDistance(totalDistanceWithUser)}
-                                    </Text>
-                                )}
-                            </VStack>
-                        </VStack>
-                        {completedStops.length > 0 && (
-                            <>
-                                <Box className="px-4 py-2 bg-background-50 ">
-                                    <Text size="xs" className="uppercase font-bold text-typography-400">Completed Stops</Text>
-                                </Box>
-                                <VStack
-                                    className='p-4'
-                                    space='md'
-                                >
-                                    {completedStops.map((stop, idx) => {
-                                        const displayNumber = idx + 1
-                                        return (
-                                            <ReorderListItem
-                                                key={stop.id}
-                                                displayNumber={displayNumber}
-                                                isVisited={true}
-                                                landmark={stop.place}
-                                            />
-                                        )
-                                    })}
-                                </VStack>
-                            </>
-                        )}
-
-                        <Box className="p-2 bg-background-50">
-                            <Text size="xs" className="uppercase font-bold text-typography-400">Drag to Reorder Stops</Text>
-                        </Box>
-                    </VStack>
-                }
+                ListHeaderComponent={HeaderComponent}
             />
             <Center className='absolute bottom-safe-or-6 left-4 right-4 p-4'>
                 <Button className='w-full'
