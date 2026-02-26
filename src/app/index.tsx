@@ -84,20 +84,22 @@ const LoadingSplashScreen = () => {
                 }
 
                 // 2. Check for app updates against GitHub releases
-                try {
-                    const response = await fetch(GITHUB_API_URL);
-                    if (response.ok) {
-                        const releaseData = await response.json();
-                        const latestTag: string = releaseData.tag_name ?? '';
-                        const currentVersion = Application.nativeApplicationVersion ?? '0.0.0';
+                if (!__DEV__) {
+                    try {
+                        const response = await fetch(GITHUB_API_URL);
+                        if (response.ok) {
+                            const releaseData = await response.json();
+                            const latestTag: string = releaseData.tag_name ?? '';
+                            const currentVersion = Application.nativeApplicationVersion ?? '0.0.0';
 
-                        if (latestTag && isOutdated(currentVersion, latestTag)) {
-                            setShowUpdateDialog(true);
-                            return; // Block further loading
+                            if (latestTag && isOutdated(currentVersion, latestTag)) {
+                                setShowUpdateDialog(true);
+                                return; // Block further loading
+                            }
                         }
+                    } catch {
+                        // Non-fatal: if the version check fails, allow the app to continue
                     }
-                } catch {
-                    // Non-fatal: if the version check fails, allow the app to continue
                 }
 
 

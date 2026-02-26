@@ -16,6 +16,7 @@ import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
 
 import ExpandableFab from '@/src/components/ExpandableFAB';
+import { ItineraryInfoModal } from '@/src/components/itinerary/ItineraryInfoModal';
 import { ItineraryItem } from '@/src/components/ItineraryItem';
 import ItinerarySkeleton from '@/src/components/ItinerarySkeleton';
 import { QueryKey } from '@/src/constants/QueryKey';
@@ -39,6 +40,9 @@ export default function ItinerariesScreen() {
     const [showAlertDialog, setShowAlertDialog] = useState(false);
     const [itineraryToDelete, setItineraryToDelete] = useState<number | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const [selectedItineraryId, setSelectedItineraryId] = useState<number | null>(null);
 
     const {
         data: itineraries = [],
@@ -208,10 +212,8 @@ export default function ItinerariesScreen() {
                         itinerary={itinerary}
                         onPress={handlePress}
                         onInfoPress={(id) => {
-                            router.navigate({
-                                pathname: '/itinerary/[id]/info',
-                                params: { id },
-                            });
+                            setSelectedItineraryId(id);
+                            setIsInfoModalOpen(true);
                         }}
                         onDeletePress={(id) => {
                             deleteItinerary(id);
@@ -309,6 +311,12 @@ export default function ItinerariesScreen() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
+
+            <ItineraryInfoModal
+                isOpen={isInfoModalOpen}
+                onClose={() => setIsInfoModalOpen(false)}
+                itineraryId={selectedItineraryId}
+            />
         </Box>
     );
 }
