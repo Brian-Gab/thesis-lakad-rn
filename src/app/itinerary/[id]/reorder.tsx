@@ -31,6 +31,7 @@ import { useAuthStore } from '@/src/stores/useAuth';
 import { calculateDistanceMatrix } from '@/src/utils/distance/calculateDistanceMatrix';
 import { calculateRouteDistanceFromMatrix } from '@/src/utils/distance/calculateRouteDistanceFromMatrix';
 import { fetchDistanceMatrix } from '@/src/utils/distance/fetchDistanceMatrix';
+import { getHaversineDistance } from '@/src/utils/distance/getHaversineDistance';
 import { fetchItineraryById } from '@/src/utils/fetchItineraries';
 import { formatDistance } from '@/src/utils/format/distance';
 import { optimizeItinerary } from '@/src/utils/itinerary/optimizeItinerary';
@@ -69,28 +70,16 @@ const ReorderScreen = () => {
     const firstPendingStopId = itinerary?.stops.find(stop => !stop.visited_at)?.place_id;
 
     React.useEffect(() => {
-        let mounted = true;
-
-        async function fetchFirstStopDistance() {
-            const firstStop = itinerary?.stops.find(stop => !stop.visited_at);
-            if (userLocation && firstStop?.place) {
-                try {
-                    const matrix = await calculateDistanceMatrix({
-                        waypointsWithIds: [
-                            { id: 'user', coords: userLocation },
-                            { id: firstStop.place_id.toString(), coords: [firstStop.place.longitude, firstStop.place.latitude] }
-                        ]
-                    });
-                    const dist = matrix['user']?.[firstStop.place_id.toString()] ?? 0;
-                    if (mounted) setDistanceToNextStop(dist);
-                } catch (e) {
-                    console.warn(e);
-                }
-            }
+        const firstStop = itinerary?.stops.find(stop => !stop.visited_at);
+        if (userLocation && firstStop?.place) {
+            const dist = getHaversineDistance(
+                userLocation,
+                [firstStop.place.longitude, firstStop.place.latitude]
+            );
+            setDistanceToNextStop(dist);
+        } else {
+            setDistanceToNextStop(0);
         }
-        fetchFirstStopDistance();
-
-        return () => { mounted = false };
     }, [userLocation, firstPendingStopId, itinerary?.stops]);
 
 
