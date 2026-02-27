@@ -223,7 +223,9 @@ export function LandmarkForm({
                                 {uploadMode === 'file' && (
                                     <Button onPress={handlePickImage} className="absolute bottom-4 right-4 rounded-2xl shadow-xl" action="primary">
                                         <ButtonIcon as={Camera} className="mr-2" />
-                                        <ButtonText>Replace Photo</ButtonText>
+                                        <ButtonText>
+                                            {(pendingImageData || imagePreview) ? 'Replace Photo' : 'Upload Photo'}
+                                        </ButtonText>
                                     </Button>
                                 )}
                             </Box>
