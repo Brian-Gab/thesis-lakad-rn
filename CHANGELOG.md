@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Converted the itinerary settings screen (rename, delete) to a modal for quicker access ([EnigmaG](https://github.com/Brian-Gab)). ([#56](https://github.com/niceWizzard/thesis-lakad-rn/pull/56))
 - Disable version checking on dev mode ([EnigmaG](https://github.com/Brian-Gab)). ([#56](https://github.com/niceWizzard/thesis-lakad-rn/pull/56))
 - Moved toast notification to top
+- Auto switch to admin mode if admin on production
 
 ### Fixed
 - Fixed upload button text stays as replace photo even after uploading a new photo 

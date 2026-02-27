@@ -140,6 +140,14 @@ const LoadingSplashScreen = () => {
                 // 5. Set global auth state and enter the app
                 setAuth(session, userType);
 
+                // On dev don't auto switch to admin mode
+                if (!__DEV__) {
+                    if (userType !== 'Regular') {
+                        router.replace('/(admin)/(tabs)/places');
+                        return;
+                    }
+                }
+
 
                 await queryClient.fetchQuery({
                     queryKey: [QueryKey.ITINERARIES, session.user.id],
