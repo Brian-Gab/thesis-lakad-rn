@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import { AlertCircle, Trash, Type } from 'lucide-react-native';
+import { AlertCircle, Trash, Type, X } from 'lucide-react-native';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ActivityIndicator } from 'react-native';
@@ -17,7 +17,6 @@ import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
 import { Modal, ModalBackdrop, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { X } from 'lucide-react-native';
 
 import { Center } from '@/components/ui/center';
 import { QueryKey } from '@/src/constants/QueryKey';
