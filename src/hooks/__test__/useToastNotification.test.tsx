@@ -42,7 +42,7 @@ describe('useToastNotification', () => {
 
         expect(mockShow).toHaveBeenCalledTimes(1);
         expect(mockShow).toHaveBeenCalledWith(expect.objectContaining({
-            placement: 'bottom',
+            placement: 'top',
             duration: 2000,
             render: expect.any(Function),
         }));
