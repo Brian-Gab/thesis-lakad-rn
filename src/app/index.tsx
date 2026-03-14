@@ -47,7 +47,7 @@ function isOutdated(current: string, latest: string): boolean {
 
 const LoadingSplashScreen = () => {
     const router = useRouter();
-    const { setAuth } = useAuthStore();
+    const { setAuth, isForcedRegularMode } = useAuthStore();
     const initialURL = Linking.useLinkingURL();
     const [networkState, setNetworkState] = useState<NetworkState | null>(null);
     const [loadingError, setLoadingError] = useState<Error | null | undefined>()
@@ -142,7 +142,7 @@ const LoadingSplashScreen = () => {
 
                 // On dev don't auto switch to admin mode
                 if (!__DEV__) {
-                    if (userType !== 'Regular') {
+                    if (userType !== 'Regular' && !isForcedRegularMode) {
                         router.replace('/(admin)/(tabs)/places');
                         return;
                     }
@@ -166,7 +166,7 @@ const LoadingSplashScreen = () => {
         // Artificial delay for branding visibility (adjust or remove as needed)
         const timer = setTimeout(prepare, 1);
         return () => clearTimeout(timer);
-    }, [initialURL, loadingError, networkState, queryClient, router, setAuth]);
+    }, [initialURL, loadingError, networkState, queryClient, router, setAuth, isForcedRegularMode]);
 
     function handleRetryPress() {
         router.replace('/')

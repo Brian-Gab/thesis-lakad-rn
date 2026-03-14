@@ -26,7 +26,7 @@ const coverImage = require('@/assets/images/lakad-cover.png');
 
 function MoreTab() {
     const router = useRouter();
-    const { session } = useAuthStore();
+    const { session, setForcedRegularMode } = useAuthStore();
     const { showToast } = useToastNotification();
 
     const menuItems = [
@@ -76,6 +76,8 @@ function MoreTab() {
                 return;
             }
 
+            // Optional: reset forced regular mode on sign out if desired
+            setForcedRegularMode(false);
             router.replace('/(auth)/signin');
         } catch (e) {
             showToast({
@@ -87,6 +89,7 @@ function MoreTab() {
     };
 
     const handleBackToRegularModePress = () => {
+        setForcedRegularMode(true);
         router.replace("/");
     }
 

@@ -9,6 +9,8 @@ interface AuthStore {
     isAdmin: boolean
     userType: UserType
     setUserType(isAdmin: UserType): void
+    isForcedRegularMode: boolean
+    setForcedRegularMode: (val: boolean) => void
 }
 
 
@@ -28,4 +30,6 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         })
     },
     isAdmin: false,
+    isForcedRegularMode: false,
+    setForcedRegularMode: (val: boolean) => set({ isForcedRegularMode: val })
 }))

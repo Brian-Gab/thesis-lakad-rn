@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed stars on review screen overflowing outside the container
 - Fixed error on create place when fetching all landmarks for distance matrix update
 - Fixed search results box showing landmark type instead of unverified type for unverified landmarks
+- Fixed "Back to Regular Mode" switches to admin mode on release
 
 
 ## [1.1.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.0...1.1.0)
