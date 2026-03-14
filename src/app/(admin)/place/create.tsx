@@ -90,7 +90,9 @@ export default function AdminLandmarkCreateScreen() {
 
             // Create distance matrix for new landmark
 
-            const landmarks = await queryClient.fetchQuery<Place[]>({ queryKey: [QueryKey.ALL_LANDMARKS] })
+            const landmarks = await queryClient.getQueryData<Place[]>([QueryKey.ALL_LANDMARKS])
+
+            if (!landmarks) throw new Error("No landmarks found")
 
             const { inbound, outbound, sourceId } = await calculateIncrementalMatrix({
                 newWaypoint: {

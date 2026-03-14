@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - An error showing when creating a place preventing default back behavior.
 - Fixed place data cache not updating after deleting/restoring a place
 - Fixed stars on review screen overflowing outside the container
+- Fixed error on create place when fetching all landmarks for distance matrix update
 
 
 ## [1.1.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.0...1.1.0)
