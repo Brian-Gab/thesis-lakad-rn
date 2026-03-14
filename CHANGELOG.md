@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated supabase places types according to phacto specification 
 - Updated admin places tab names to "Places" and "Unverified"
 - Updated AGAM to use average rating if review_count > 0 otherwise fallback to gmaps_rating
+- Updated stopover card aspect ratio to make it taller and skinnier
 
 ### Fixed
 - Fixed upload button text stays as replace photo even after uploading a new photo 

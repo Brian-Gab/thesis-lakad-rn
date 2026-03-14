@@ -14,8 +14,8 @@ const StopOverCard = ({ stop }: {
 
 }) => {
     const { width, height } = useWindowDimensions();
-    const cardWidth = Math.min(width * 0.90, 400);
-    const cardHeight = Math.min(height * 0.60, 600);
+    const cardWidth = Math.min(width * 0.80, 400);
+    const cardHeight = Math.min(height * 0.65, 600);
 
     const landmark = stop.place
     return (
