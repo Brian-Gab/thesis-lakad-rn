@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed upload button text stays as replace photo even after uploading a new photo 
 - An error showing when creating a place preventing default back behavior.
+- Fixed place data cache not updating after deleting/restoring a place
 
 
 ## [1.1.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.0...1.1.0)

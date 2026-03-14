@@ -61,18 +61,28 @@ export default function AdminLandmarkDetailScreen() {
   // --- DELETE/RESTORE MUTATION ---
   const toggleArchiveMutation = useMutation({
     mutationFn: async (shouldRestore: boolean = false) => {
-      const { error } = await supabase
+      const { error, data } = await supabase
         .from('places')
         .update({
           deleted_at: shouldRestore ? null : new Date().toISOString(),
         })
-        .eq('id', id as any);
+        .eq('id', id as any).select();
       if (error) throw error;
 
+      if (!data || !data.length)
+        throw new Error("Failed to delete/restore landmark since data is not found.");
+
+      const updatedLandmark = data[0];
+
       await queryClient.invalidateQueries({ queryKey: [QueryKey.LANDMARK_BY_ID, id] });
-      await queryClient.invalidateQueries({ queryKey: [QueryKey.VERIFIED_LANDMARKS] })
+      if (updatedLandmark.is_verified) {
+        await queryClient.invalidateQueries({ queryKey: [QueryKey.VERIFIED_LANDMARKS] })
+        await queryClient.invalidateQueries({ queryKey: [QueryKey.ARCHIVED_LANDMARKS] })
+      } else {
+        await queryClient.invalidateQueries({ queryKey: [QueryKey.UNVERIFIED_LANDMARKS] })
+        await queryClient.invalidateQueries({ queryKey: [QueryKey.ARCHIVED_UNVERIFIED_LANDMARKS] })
+      }
       await queryClient.invalidateQueries({ queryKey: [QueryKey.ALL_LANDMARKS] })
-      await queryClient.invalidateQueries({ queryKey: [QueryKey.ARCHIVED_LANDMARKS] })
     },
     onSuccess: (_, isRestoring) => {
       showToast({
