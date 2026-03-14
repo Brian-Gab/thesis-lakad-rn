@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disable version checking on dev mode ([EnigmaG](https://github.com/Brian-Gab)). ([#56](https://github.com/niceWizzard/thesis-lakad-rn/pull/56))
 - Moved toast notification to top
 - Auto switch to admin mode if admin on production
+- Updated supabase places types according to phacto specification 
 
 ### Fixed
 - Fixed upload button text stays as replace photo even after uploading a new photo 

@@ -6,5 +6,6 @@ export const LANDMARK_TYPES = [
     'Nature',
     'Religious',
     'Museum',
-    'Mall'
+    'Industrial Tourism',
+    'Sports & Recreation',
 ] satisfies PlaceType[]

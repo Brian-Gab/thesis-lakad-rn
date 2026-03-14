@@ -159,6 +159,20 @@ CREATE TYPE "public"."municipality" AS ENUM (
 ALTER TYPE "public"."municipality" OWNER TO "postgres";
 
 
+CREATE TYPE "public"."phacto_type" AS ENUM (
+    'Historical',
+    'Religious',
+    'Nature',
+    'Museum',
+    'Industrial Tourism',
+    'Landmark',
+    'Sports & Recreation'
+);
+
+
+ALTER TYPE "public"."phacto_type" OWNER TO "postgres";
+
+
 CREATE TYPE "public"."review_report_status" AS ENUM (
     'PENDING',
     'ACTION_TAKEN',
@@ -250,7 +264,7 @@ $$;
 ALTER FUNCTION "public"."get_filterable_reviews"("place_id_input" bigint, "rating_filter" integer, "sort_column" "text", "sort_descending" boolean, "page_number" integer, "page_size" integer, "ignore_user_id" "uuid") OWNER TO "postgres";
 
 
-CREATE OR REPLACE FUNCTION "public"."get_place_by_id"("place_id_input" bigint) RETURNS TABLE("id" bigint, "name" "text", "municipality" "public"."municipality", "district" "public"."district", "latitude" double precision, "longitude" double precision, "description" "text", "image_url" "text", "image_credits" "text", "gmaps_rating" real, "type" "public"."landmark_type2", "updated_at" timestamp with time zone, "created_at" timestamp with time zone, "deleted_at" timestamp with time zone, "creation_type" "public"."LandmarkCreationType", "is_verified" boolean, "average_rating" double precision, "review_count" bigint, "opening_hours" "jsonb")
+CREATE OR REPLACE FUNCTION "public"."get_place_by_id"("place_id_input" bigint) RETURNS TABLE("id" bigint, "name" "text", "municipality" "public"."municipality", "district" "public"."district", "latitude" double precision, "longitude" double precision, "description" "text", "image_url" "text", "image_credits" "text", "gmaps_rating" real, "type" "public"."phacto_type", "updated_at" timestamp with time zone, "created_at" timestamp with time zone, "deleted_at" timestamp with time zone, "creation_type" "public"."LandmarkCreationType", "is_verified" boolean, "average_rating" double precision, "review_count" bigint, "opening_hours" "jsonb")
     LANGUAGE "plpgsql"
     AS $$
 BEGIN
@@ -305,7 +319,7 @@ $$;
 ALTER FUNCTION "public"."get_place_by_id"("place_id_input" bigint) OWNER TO "postgres";
 
 
-CREATE OR REPLACE FUNCTION "public"."get_places_with_stats"() RETURNS TABLE("id" bigint, "name" "text", "municipality" "public"."municipality", "district" "public"."district", "latitude" double precision, "longitude" double precision, "description" "text", "image_url" "text", "image_credits" "text", "gmaps_rating" real, "type" "public"."landmark_type2", "updated_at" timestamp with time zone, "created_at" timestamp with time zone, "deleted_at" timestamp with time zone, "creation_type" "public"."LandmarkCreationType", "is_verified" boolean, "average_rating" double precision, "review_count" bigint, "opening_hours" "jsonb")
+CREATE OR REPLACE FUNCTION "public"."get_places_with_stats"() RETURNS TABLE("id" bigint, "name" "text", "municipality" "public"."municipality", "district" "public"."district", "latitude" double precision, "longitude" double precision, "description" "text", "image_url" "text", "image_credits" "text", "gmaps_rating" real, "type" "public"."phacto_type", "updated_at" timestamp with time zone, "created_at" timestamp with time zone, "deleted_at" timestamp with time zone, "creation_type" "public"."LandmarkCreationType", "is_verified" boolean, "average_rating" double precision, "review_count" bigint, "opening_hours" "jsonb")
     LANGUAGE "plpgsql"
     AS $$
 BEGIN
@@ -568,9 +582,9 @@ CREATE TABLE IF NOT EXISTS "public"."places" (
     "municipality" "public"."municipality" NOT NULL,
     "deleted_at" timestamp with time zone,
     "creation_type" "public"."LandmarkCreationType" DEFAULT 'TOURIST_ATTRACTION'::"public"."LandmarkCreationType" NOT NULL,
-    "type" "public"."landmark_type2" DEFAULT 'Landmark'::"public"."landmark_type2",
     "image_credits" "text",
-    "is_verified" boolean DEFAULT true NOT NULL
+    "is_verified" boolean DEFAULT true NOT NULL,
+    "type" "public"."phacto_type" DEFAULT 'Landmark'::"public"."phacto_type"
 );
 
 

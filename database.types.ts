@@ -128,7 +128,7 @@ export type Database = {
           longitude: number
           municipality: Database["public"]["Enums"]["municipality"]
           name: string
-          type: Database["public"]["Enums"]["landmark_type2"] | null
+          type: Database["public"]["Enums"]["phacto_type"] | null
           updated_at: string
         }
         Insert: {
@@ -146,7 +146,7 @@ export type Database = {
           longitude: number
           municipality: Database["public"]["Enums"]["municipality"]
           name: string
-          type?: Database["public"]["Enums"]["landmark_type2"] | null
+          type?: Database["public"]["Enums"]["phacto_type"] | null
           updated_at?: string
         }
         Update: {
@@ -164,7 +164,7 @@ export type Database = {
           longitude?: number
           municipality?: Database["public"]["Enums"]["municipality"]
           name?: string
-          type?: Database["public"]["Enums"]["landmark_type2"] | null
+          type?: Database["public"]["Enums"]["phacto_type"] | null
           updated_at?: string
         }
         Relationships: []
@@ -539,6 +539,14 @@ export type Database = {
         | "Norzagaray"
         | "Santa Maria"
         | "SJDM"
+      phacto_type:
+        | "Historical"
+        | "Religious"
+        | "Nature"
+        | "Museum"
+        | "Industrial Tourism"
+        | "Landmark"
+        | "Sports & Recreation"
       review_report_status: "PENDING" | "ACTION_TAKEN" | "DISMISSED"
       user_type: "Regular" | "Admin" | "SuperAdmin"
     }
@@ -732,6 +740,15 @@ export const Constants = {
         "Norzagaray",
         "Santa Maria",
         "SJDM",
+      ],
+      phacto_type: [
+        "Historical",
+        "Religious",
+        "Nature",
+        "Museum",
+        "Industrial Tourism",
+        "Landmark",
+        "Sports & Recreation",
       ],
       review_report_status: ["PENDING", "ACTION_TAKEN", "DISMISSED"],
       user_type: ["Regular", "Admin", "SuperAdmin"],

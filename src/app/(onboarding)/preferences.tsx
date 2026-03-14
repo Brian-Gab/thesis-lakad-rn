@@ -9,11 +9,12 @@ import { Stack, useRouter } from 'expo-router'
 import {
     Check,
     Church,
+    Factory,
     History,
     LandmarkIcon,
     Library,
-    ShoppingBag,
-    Trees
+    Trees,
+    Trophy
 } from "lucide-react-native"
 import React, { useEffect, useState } from 'react'
 import { ScrollView, TouchableOpacity, View } from 'react-native'
@@ -30,7 +31,9 @@ export const TYPES: {
         { id: 'Nature', label: 'Nature', icon: Trees, color: 'bg-green-100', text: 'text-green-700' },
         { id: 'Religious', label: 'Religious', icon: Church, color: 'bg-green-100', text: 'text-green-700' },
         { id: 'Museum', label: 'Museum', icon: Library, color: 'bg-green-100', text: 'text-green-700' },
-        { id: 'Mall', label: 'Mall', icon: ShoppingBag, color: 'bg-green-100', text: 'text-green-700' },
+        { id: 'Industrial Tourism', label: 'Industrial Tourism', icon: Factory, color: 'bg-green-100', text: 'text-green-700' },
+        { id: 'Sports & Recreation', label: 'Sports & Recreation', icon: Trophy, color: 'bg-green-100', text: 'text-green-700' },
+
     ];
 
 const OnboardingPreferences = () => {
