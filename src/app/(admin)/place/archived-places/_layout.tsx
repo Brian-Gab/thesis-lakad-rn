@@ -20,8 +20,8 @@ const ArchivedPlacesLayout = () => {
                 tabBarLabelStyle: { fontWeight: 'bold', textTransform: 'capitalize' },
             }}
         >
-            <MaterialTopTabs.Screen name="index" options={{ title: "Landmarks" }} />
-            <MaterialTopTabs.Screen name="pasalubongs" options={{ title: "Pasalubong Centers" }} />
+            <MaterialTopTabs.Screen name="index" options={{ title: "Places" }} />
+            <MaterialTopTabs.Screen name="pasalubongs" options={{ title: "Unverified Places" }} />
         </MaterialTopTabs>
     );
 };

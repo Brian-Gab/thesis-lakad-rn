@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved toast notification to top
 - Auto switch to admin mode if admin on production
 - Updated supabase places types according to phacto specification 
+- Updated admin places tab names to "Places" and "Unverified"
 
 ### Fixed
 - Fixed upload button text stays as replace photo even after uploading a new photo 
