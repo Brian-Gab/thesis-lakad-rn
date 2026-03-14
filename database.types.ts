@@ -384,6 +384,7 @@ export type Database = {
           opening_hours: Json
           review_count: number
           type: Database["public"]["Enums"]["phacto_type"]
+          unverified_type: Database["public"]["Enums"]["unverified_types"]
           updated_at: string
         }[]
       }
@@ -408,6 +409,7 @@ export type Database = {
           opening_hours: Json
           review_count: number
           type: Database["public"]["Enums"]["phacto_type"]
+          unverified_type: Database["public"]["Enums"]["unverified_types"]
           updated_at: string
         }[]
       }
