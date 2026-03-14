@@ -138,7 +138,13 @@ export default function AdminLandmarkCreateScreen() {
             }
 
 
-            await queryClient.fetchQuery({ queryKey: [QueryKey.ALL_LANDMARKS] });
+            await queryClient.invalidateQueries({ queryKey: [QueryKey.ALL_LANDMARKS] });
+            if (formData.is_verified === false) {
+                await queryClient.invalidateQueries({ queryKey: [QueryKey.UNVERIFIED_LANDMARKS] });
+            } else {
+                await queryClient.invalidateQueries({ queryKey: [QueryKey.VERIFIED_LANDMARKS] });
+            }
+
         },
         onSuccess: () => {
             showToast({
