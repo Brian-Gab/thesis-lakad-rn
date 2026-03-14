@@ -1,8 +1,10 @@
 import { Box } from '@/components/ui/box'
 import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
 import { Search, X } from 'lucide-react-native'
 import React, { useState } from 'react'
 import { Pressable } from 'react-native'
+import { useQueryCombinedLandmarks } from '../hooks/useQueryCombinedLandmarks'
 
 const ExploreSearchBox = ({
     onSearch,
@@ -15,6 +17,7 @@ const ExploreSearchBox = ({
     onBlur?: () => void
     value?: string
 }) => {
+    const { isLoading, isFetching } = useQueryCombinedLandmarks()
     const [internalValue, setInternalValue] = useState('')
     const displayValue = value !== undefined ? value : internalValue;
 
@@ -36,7 +39,11 @@ const ExploreSearchBox = ({
                 size='xl'
             >
                 <InputSlot className="pl-4">
-                    <InputIcon as={Search} className="text-typography-400" />
+                    {isLoading || isFetching ? (
+                        <Spinner size="small" className="text-primary-500" />
+                    ) : (
+                        <InputIcon as={Search} className="text-typography-400" />
+                    )}
                 </InputSlot>
                 <InputField
                     className="text-typography-900"

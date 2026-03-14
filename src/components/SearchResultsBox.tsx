@@ -1,6 +1,7 @@
 import { Box } from '@/components/ui/box'
 import { Divider } from '@/components/ui/divider'
 import { Icon } from '@/components/ui/icon'
+import { Spinner } from '@/components/ui/spinner'
 import { Text } from '@/components/ui/text'
 import { VStack } from '@/components/ui/vstack'
 import { addRecentSearch, getRecentSearches } from '@/src/utils/searchHistory'
@@ -20,7 +21,7 @@ const SearchResultsBox = ({
     visible: boolean
 }) => {
 
-    const { landmarks } = useQueryCombinedLandmarks();
+    const { landmarks, isLoading, isFetching, refetch } = useQueryCombinedLandmarks();
     const [recentLandmarks, setRecentLandmarks] = useState<Place[]>([])
 
     // Load recent searches when visible becomes true
@@ -63,14 +64,8 @@ const SearchResultsBox = ({
     // Hide if not visible
     if (!visible) return null;
 
-    // Hide if searching but query too short (opt: 1 char is enough for reactive search)
-    // if (isSearching && query.length < 1) return null;
-
-    // Hide if no results and searching
-    if (isSearching && results.length === 0) return null;
-
-    // Hide if no recent searches and not searching
-    if (!isSearching && results.length === 0) return null;
+    // Hide if no recent searches and not searching (and not loading)
+    if (!isSearching && results.length === 0 && !isLoading && !isFetching) return null;
 
 
     return (
@@ -89,6 +84,19 @@ const SearchResultsBox = ({
                 keyExtractor={v => v.id.toString()}
                 keyboardShouldPersistTaps='handled'
                 showsVerticalScrollIndicator={true}
+                refreshing={isLoading || isFetching}
+                onRefresh={refetch}
+                ListEmptyComponent={() => (
+                    <Box className="p-8 items-center justify-center">
+                        {(isLoading || isFetching) ? (
+                            <Spinner size="large" />
+                        ) : (
+                            <Text className="text-typography-500 text-center">
+                                {isSearching ? "No locations found." : "No recent searches."}
+                            </Text>
+                        )}
+                    </Box>
+                )}
                 ItemSeparatorComponent={() => <Divider className="bg-outline-50 mx-4" />}
                 renderItem={({ item: landmark }) => (
                     <TouchableOpacity

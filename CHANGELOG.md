@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated AGAM to use average rating if review_count > 0 otherwise fallback to gmaps_rating
 - Updated stopover card aspect ratio to make it taller and skinnier
 - Updated edit duration modal to use a more standard timer picker
+- Updated search results box to have loading and empty states
 
 ### Fixed
 - Fixed upload button text stays as replace photo even after uploading a new photo 
