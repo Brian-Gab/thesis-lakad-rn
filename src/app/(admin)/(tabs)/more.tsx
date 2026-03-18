@@ -9,6 +9,7 @@ import { Icon } from '@/components/ui/icon';
 import { useToastNotification } from '@/src/hooks/useToastNotification';
 import { useAuthStore } from '@/src/stores/useAuth';
 import { supabase } from '@/src/utils/supabase';
+import * as Application from 'expo-application';
 import {
     Archive,
     ArrowLeftRight,
@@ -173,7 +174,7 @@ function MoreTab() {
 
                 <View className="items-center mt-8">
                     <Text size="xs" className="text-typography-400 font-medium">
-                        LAKAD APP • VERSION 1.0.0
+                        LAKAD APP • VERSION {Application.nativeApplicationVersion}
                     </Text>
                     <Text size="xs" className="text-typography-300 mt-1 italic">
                         Made for smart travelers

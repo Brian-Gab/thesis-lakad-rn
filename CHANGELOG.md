@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed button sizes not round in place/view
 - Fixed color violet appearing in filter buttons
 - Fixed color violet on user profile on settings screen
+- Fixed version number on admin more screen to show actual version number
 
 ## [1.2.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.1.0...1.2.0)
 
