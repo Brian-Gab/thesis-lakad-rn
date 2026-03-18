@@ -10,6 +10,7 @@ import { Button, ButtonIcon, ButtonText } from '@/components/ui/button'
 import { Heading } from '@/components/ui/heading'
 import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input'
 import { Text } from '@/components/ui/text'
+import PasswordInput from '@/src/components/PasswordInput'
 import { useToastNotification } from '@/src/hooks/useToastNotification'
 import { Lock, LogIn, Mail } from 'lucide-react-native'
 
@@ -128,21 +129,16 @@ const SigninPage = () => {
                                         control={control}
                                         name="password"
                                         render={({ field: { onChange, onBlur, value } }) => (
-                                            <Input variant="outline" size="lg" isInvalid={!!errors.password && dirtyFields.password}>
-                                                <InputSlot className="pl-4">
-                                                    <InputIcon as={Lock} className="text-typography-400" />
-                                                </InputSlot>
-                                                <InputField
-                                                    ref={passwordRef as any}
-                                                    placeholder="Enter password"
-                                                    type="password"
-                                                    autoCapitalize="none"
-                                                    onBlur={onBlur}
-                                                    onChangeText={onChange}
-                                                    value={value}
-                                                    onSubmitEditing={handleSubmit(onSignin)}
-                                                />
-                                            </Input>
+                                            <PasswordInput
+                                                ref={passwordRef as any}
+                                                icon={Lock}
+                                                isInvalid={!!errors.password && dirtyFields.password}
+                                                placeholder="Enter password"
+                                                onBlur={onBlur}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                onSubmitEditing={handleSubmit(onSignin)}
+                                            />
                                         )}
                                     />
                                     {errors.password && dirtyFields.password && (

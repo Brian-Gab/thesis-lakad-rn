@@ -20,6 +20,7 @@ import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input';
 import { Text } from '@/components/ui/text';
+import PasswordInput from '@/src/components/PasswordInput';
 import { useToastNotification } from '@/src/hooks/useToastNotification';
 import { Lock, Mail, User, UserPlus } from 'lucide-react-native';
 
@@ -192,20 +193,17 @@ const SignupPage = () => {
                                         control={control}
                                         name="password"
                                         render={({ field: { onChange, onBlur, value } }) => (
-                                            <Input variant="outline" size="lg" isInvalid={!!errors.password && dirtyFields.password}>
-                                                <InputSlot className="pl-4"><InputIcon as={Lock} /></InputSlot>
-                                                <InputField
-                                                    ref={passwordRef as any}
-                                                    placeholder="Create a password"
-                                                    type="password"
-                                                    autoCapitalize='none'
-                                                    onBlur={onBlur}
-                                                    onChangeText={onChange}
-                                                    value={value}
-                                                    returnKeyType="next"
-                                                    onSubmitEditing={() => confirmPasswordRef.current?.focus()}
-                                                />
-                                            </Input>
+                                            <PasswordInput
+                                                ref={passwordRef as any}
+                                                icon={Lock}
+                                                isInvalid={!!errors.password && dirtyFields.password}
+                                                placeholder="Create a password"
+                                                onBlur={onBlur}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                returnKeyType="next"
+                                                onSubmitEditing={() => confirmPasswordRef.current?.focus()}
+                                            />
                                         )}
                                     />
                                     {errors.password && dirtyFields.password && (
@@ -220,20 +218,17 @@ const SignupPage = () => {
                                         control={control}
                                         name="confirmPassword"
                                         render={({ field: { onChange, onBlur, value } }) => (
-                                            <Input variant="outline" size="lg" isInvalid={!!errors.confirmPassword && dirtyFields.confirmPassword}>
-                                                <InputSlot className="pl-4"><InputIcon as={Lock} /></InputSlot>
-                                                <InputField
-                                                    ref={confirmPasswordRef as any}
-                                                    placeholder="Repeat password"
-                                                    type="password"
-                                                    onBlur={onBlur}
-                                                    autoCapitalize='none'
-                                                    onChangeText={onChange}
-                                                    value={value}
-                                                    returnKeyType="done"
-                                                    onSubmitEditing={handleSubmit(onSignup)}
-                                                />
-                                            </Input>
+                                            <PasswordInput
+                                                ref={confirmPasswordRef as any}
+                                                icon={Lock}
+                                                isInvalid={!!errors.confirmPassword && dirtyFields.confirmPassword}
+                                                placeholder="Repeat password"
+                                                onBlur={onBlur}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                returnKeyType="done"
+                                                onSubmitEditing={handleSubmit(onSignup)}
+                                            />
                                         )}
                                     />
                                     {errors.confirmPassword && dirtyFields.confirmPassword && (

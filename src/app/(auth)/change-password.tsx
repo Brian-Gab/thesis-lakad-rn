@@ -9,8 +9,8 @@ import * as z from 'zod'
 
 import { Button, ButtonIcon, ButtonText } from '@/components/ui/button'
 import { Heading } from '@/components/ui/heading'
-import { Input, InputField, InputIcon, InputSlot } from '@/components/ui/input'
 import { Text } from '@/components/ui/text'
+import PasswordInput from '@/src/components/PasswordInput'
 import { useToastNotification } from '@/src/hooks/useToastNotification'
 import { KeyRound, Lock, RefreshCw } from 'lucide-react-native'
 
@@ -106,19 +106,16 @@ const ChangePasswordHandler = () => {
                                         control={control}
                                         name="currentPassword"
                                         render={({ field: { onChange, onBlur, value } }) => (
-                                            <Input variant="outline" size="lg" isInvalid={!!errors.currentPassword}>
-                                                <InputSlot className="pl-4"><InputIcon as={KeyRound} /></InputSlot>
-                                                <InputField
-                                                    placeholder="Current password"
-                                                    type="password"
-                                                    autoCapitalize='none'
-                                                    onBlur={onBlur}
-                                                    onChangeText={onChange}
-                                                    value={value}
-                                                    returnKeyType="next"
-                                                    onSubmitEditing={() => newPasswordRef.current?.focus()}
-                                                />
-                                            </Input>
+                                            <PasswordInput
+                                                icon={KeyRound}
+                                                isInvalid={!!errors.currentPassword}
+                                                placeholder="Current password"
+                                                onBlur={onBlur}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                returnKeyType="next"
+                                                onSubmitEditing={() => newPasswordRef.current?.focus()}
+                                            />
                                         )}
                                     />
                                     {errors.currentPassword && (
@@ -133,20 +130,17 @@ const ChangePasswordHandler = () => {
                                         control={control}
                                         name="newPassword"
                                         render={({ field: { onChange, onBlur, value } }) => (
-                                            <Input variant="outline" size="lg" isInvalid={!!errors.newPassword && dirtyFields.newPassword}>
-                                                <InputSlot className="pl-4"><InputIcon as={Lock} /></InputSlot>
-                                                <InputField
-                                                    ref={newPasswordRef as any}
-                                                    placeholder="At least 8 characters"
-                                                    type="password"
-                                                    autoCapitalize='none'
-                                                    onBlur={onBlur}
-                                                    onChangeText={onChange}
-                                                    value={value}
-                                                    returnKeyType="next"
-                                                    onSubmitEditing={() => confirmPasswordRef.current?.focus()}
-                                                />
-                                            </Input>
+                                            <PasswordInput
+                                                ref={newPasswordRef as any}
+                                                icon={Lock}
+                                                isInvalid={!!errors.newPassword && !!dirtyFields.newPassword}
+                                                placeholder="At least 8 characters"
+                                                onBlur={onBlur}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                returnKeyType="next"
+                                                onSubmitEditing={() => confirmPasswordRef.current?.focus()}
+                                            />
                                         )}
                                     />
                                     {errors.newPassword && dirtyFields.newPassword && (
@@ -161,19 +155,16 @@ const ChangePasswordHandler = () => {
                                         control={control}
                                         name="confirmPassword"
                                         render={({ field: { onChange, onBlur, value } }) => (
-                                            <Input variant="outline" size="lg" isInvalid={!!errors.confirmPassword && dirtyFields.confirmPassword}>
-                                                <InputSlot className="pl-4"><InputIcon as={Lock} /></InputSlot>
-                                                <InputField
-                                                    ref={confirmPasswordRef as any}
-                                                    placeholder="Repeat new password"
-                                                    type="password"
-                                                    autoCapitalize='none'
-                                                    onBlur={onBlur}
-                                                    onChangeText={onChange}
-                                                    onSubmitEditing={handleSubmit(onChangePassword)}
-                                                    value={value}
-                                                />
-                                            </Input>
+                                            <PasswordInput
+                                                ref={confirmPasswordRef as any}
+                                                icon={Lock}
+                                                isInvalid={!!errors.confirmPassword && !!dirtyFields.confirmPassword}
+                                                placeholder="Repeat new password"
+                                                onBlur={onBlur}
+                                                onChangeText={onChange}
+                                                value={value}
+                                                onSubmitEditing={handleSubmit(onChangePassword)}
+                                            />
                                         )}
                                     />
                                     {errors.confirmPassword && dirtyFields.confirmPassword && (

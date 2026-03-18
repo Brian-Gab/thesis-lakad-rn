@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.1.0...HEAD)
 
+
+### Added
+- Added password visibility toggle to signin, signup, change password screens
+
 ### Changed
 - Removed "Lakad" heading in the More 
 - Changed header title of all places screens to "Places" instead of "Landmark"
