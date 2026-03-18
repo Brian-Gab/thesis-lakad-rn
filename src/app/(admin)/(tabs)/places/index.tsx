@@ -146,7 +146,7 @@ export default function AdminLandmarksScreen() {
                                     : 'bg-primary-50 border-primary-100'
                                     }`}
                             >
-                                <Icon as={Filter} size="xs" color={(selectedDistrict || selectedMunicipality || selectedTypes.length > 0) ? "white" : "#4f46e5"} />
+                                <Icon as={Filter} size="xs" />
                                 <Text size="xs" className={`font-bold ${(selectedDistrict || selectedMunicipality || selectedTypes.length > 0) ? "text-white" : "text-primary-600"}`}>
                                     Filters
                                 </Text>

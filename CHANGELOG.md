@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed an issue where updating display name toast notification shows incorrect title
 - Fixed button sizes not round in place/view
+- Fixed color violet appearing in filter buttons
 
 ## [1.2.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.1.0...1.2.0)
 

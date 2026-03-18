@@ -143,7 +143,7 @@ export default function AdminPasalubongCenterScreens() {
                                     : 'bg-primary-50 border-primary-100'
                                     }`}
                             >
-                                <Icon as={Filter} size="xs" color={(selectedDistrict || selectedMunicipality) ? "white" : "#4f46e5"} />
+                                <Icon as={Filter} size="xs" />
                                 <Text size="xs" className={`font-bold ${(selectedDistrict || selectedMunicipality) ? "text-white" : "text-primary-600"}`}>
                                     Filters
                                 </Text>
