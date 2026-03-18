@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Removed "Lakad" heading in the More 
 - Changed header title of all places screens to "Places" instead of "Landmark"
+- Changed colors of filter buttons in filter modal
 
 ### Fixed
 - Fixed an issue where updating display name toast notification shows incorrect title

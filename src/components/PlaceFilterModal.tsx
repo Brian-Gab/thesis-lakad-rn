@@ -102,14 +102,14 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
                                 <Text size="xs" className="font-bold text-typography-500 uppercase tracking-widest">Sort By</Text>
                                 <HStack className='gap-2 flex-wrap' >
                                     <Button
-                                        className={`rounded-xl ${watchSortKey === 'id' ? 'bg-primary-600' : 'bg-background-100'}`}
+                                        className={`rounded-xl ${watchSortKey === 'id' ? 'bg-primary-500' : 'bg-background-100'}`}
                                         onPress={() => setValue('sortKey', 'id')}
                                     >
                                         <ButtonIcon as={Clock} color={watchSortKey === 'id' ? 'white' : '#6b7280'} />
                                         <ButtonText className={watchSortKey === 'id' ? 'text-white' : 'text-typography-600'}>Recent</ButtonText>
                                     </Button>
                                     <Button
-                                        className={`rounded-xl ${watchSortKey === 'name' ? 'bg-primary-600' : 'bg-background-100'}`}
+                                        className={`rounded-xl ${watchSortKey === 'name' ? 'bg-primary-500' : 'bg-background-100'}`}
                                         onPress={() => setValue('sortKey', 'name')}
                                     >
                                         <ButtonIcon as={SortAsc} color={watchSortKey === 'name' ? 'white' : '#6b7280'} />
@@ -118,7 +118,7 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
 
                                     {/* --- Rating Sort Button --- */}
                                     <Button
-                                        className={`rounded-xl ${watchSortKey === 'rating' ? 'bg-primary-600' : 'bg-background-100'}`}
+                                        className={`rounded-xl ${watchSortKey === 'rating' ? 'bg-primary-500' : 'bg-background-100'}`}
                                         onPress={() => setValue('sortKey', 'rating')}
                                     >
                                         <ButtonIcon as={Star} color={watchSortKey === 'rating' ? 'white' : '#6b7280'} />
@@ -126,11 +126,11 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
                                     </Button>
                                 </HStack>
                                 <HStack className='gap-2'>
-                                    <Button variant="outline" className={`rounded-xl ${watchSortOrder === 'asc' ? 'border-primary-600 bg-primary-50' : 'border-outline-100'}`} onPress={() => setValue('sortOrder', 'asc')}>
-                                        <ButtonIcon as={ArrowUp} className="text-primary-600" /><ButtonText className="text-primary-700 font-bold">Asc</ButtonText>
+                                    <Button variant="outline" className={`rounded-xl ${watchSortOrder === 'asc' ? 'border-primary-500 bg-primary-50' : 'border-outline-100'}`} onPress={() => setValue('sortOrder', 'asc')}>
+                                        <ButtonIcon as={ArrowUp} className="text-primary-500" /><ButtonText className="text-primary-700 font-bold">Asc</ButtonText>
                                     </Button>
-                                    <Button variant="outline" className={`rounded-xl ${watchSortOrder === 'desc' ? 'border-primary-600 bg-primary-50' : 'border-outline-100'}`} onPress={() => setValue('sortOrder', 'desc')}>
-                                        <ButtonIcon as={ArrowDown} className="text-primary-600" /><ButtonText className="text-primary-700 font-bold">Desc</ButtonText>
+                                    <Button variant="outline" className={`rounded-xl ${watchSortOrder === 'desc' ? 'border-primary-500 bg-primary-50' : 'border-outline-100'}`} onPress={() => setValue('sortOrder', 'desc')}>
+                                        <ButtonIcon as={ArrowDown} className="text-primary-500" /><ButtonText className="text-primary-700 font-bold">Desc</ButtonText>
                                     </Button>
                                 </HStack>
                             </VStack>
@@ -146,7 +146,7 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
                                     <HStack className="gap-2 flex-wrap">
                                         <TouchableOpacity
                                             onPress={() => { setValue('selectedDistrict', null); setValue('selectedMunicipality', null); }}
-                                            className={`px-4 py-2 rounded-xl border ${!watchSelectedDistrict ? 'bg-primary-600 border-primary-600' : 'bg-background-50 border-outline-200'}`}
+                                            className={`px-4 py-2 rounded-xl border ${!watchSelectedDistrict ? 'bg-primary-500 border-primary-500' : 'bg-background-50 border-outline-200'}`}
                                         >
                                             <Text className={`text-xs font-bold ${!watchSelectedDistrict ? 'text-white' : 'text-typography-600'}`}>All</Text>
                                         </TouchableOpacity>
@@ -154,7 +154,7 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
                                             <TouchableOpacity
                                                 key={dist}
                                                 onPress={() => { setValue('selectedDistrict', dist); setValue('selectedMunicipality', null); }}
-                                                className={`px-4 py-2 rounded-xl border mr-2 ${watchSelectedDistrict === dist ? 'bg-primary-600 border-primary-600' : 'bg-background-50 border-outline-200'}`}
+                                                className={`px-4 py-2 rounded-xl border mr-2 ${watchSelectedDistrict === dist ? 'bg-primary-500 border-primary-500' : 'bg-background-50 border-outline-200'}`}
                                             >
                                                 <Text className={`text-xs font-bold ${watchSelectedDistrict === dist ? 'text-white' : 'text-typography-600'}`}>D-{dist}</Text>
                                             </TouchableOpacity>
@@ -170,7 +170,7 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
                                                 <TouchableOpacity
                                                     key={muni}
                                                     onPress={() => setValue('selectedMunicipality', watchSelectedMunicipality === muni ? null : muni)}
-                                                    className={`px-3 py-1.5 rounded-lg border ${watchSelectedMunicipality === muni ? 'bg-secondary-500 border-secondary-500' : 'bg-background-50 border-outline-200'}`}
+                                                    className={`px-3 py-1.5 rounded-lg border ${watchSelectedMunicipality === muni ? 'bg-primary-500 border-primary-500' : 'bg-background-50 border-outline-200'}`}
                                                 >
                                                     <Text className={`text-[11px] font-bold ${watchSelectedMunicipality === muni ? 'text-white' : 'text-typography-600'}`}>
                                                         {muni.replace('_', ' ')}
@@ -190,7 +190,7 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
                                         <TouchableOpacity
                                             key={cat}
                                             onPress={() => setValue('selectedTypes', watchSelectedTypes.includes(cat) ? watchSelectedTypes.filter(c => c !== cat) : [...watchSelectedTypes, cat])}
-                                            className={`px-4 py-2 rounded-full border ${watchSelectedTypes.includes(cat) ? 'bg-primary-600 border-primary-600' : 'bg-background-50 border-outline-200'}`}
+                                            className={`px-4 py-2 rounded-full border ${watchSelectedTypes.includes(cat) ? 'bg-primary-500 border-primary-500' : 'bg-background-50 border-outline-200'}`}
                                         >
                                             <HStack space="xs" className="items-center">
                                                 {watchSelectedTypes.includes(cat) && <Icon as={Check} size="xs" color="white" />}
@@ -208,7 +208,7 @@ export const PlaceFilterModal: React.FC<PlaceFilterModalProps> = ({
                         <Button variant="outline" action="secondary" className="rounded-2xl" onPress={handleClearFilters}>
                             <ButtonText>Clear All</ButtonText>
                         </Button>
-                        <Button onPress={handleSubmit(onApply)} className="rounded-2xl bg-primary-600">
+                        <Button onPress={handleSubmit(onApply)} className="rounded-2xl bg-primary-500">
                             <ButtonText className="font-bold">Apply Filters</ButtonText>
                         </Button>
                     </HStack>
