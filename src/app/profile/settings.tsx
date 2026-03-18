@@ -142,7 +142,7 @@ const AccountSettingsScreen = () => {
                         {/* Profile Header Info */}
                         <HStack className="items-center gap-4 bg-background-50 p-4 rounded-3xl">
                             <Box className="bg-primary-100 p-3 rounded-2xl">
-                                <User size={24} color="#4f46e5" />
+                                <User size={24} />
                             </Box>
                             <VStack>
                                 <Text size="xs" className="text-typography-500">Logged in as</Text>
