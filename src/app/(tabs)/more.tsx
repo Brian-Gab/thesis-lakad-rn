@@ -171,7 +171,7 @@ function MoreTab() {
                                     <Icon as={MapPin} size='lg' />
                                 </View>
                                 <Text size="md" className="font-medium text-typography-800">
-                                    View All Landmarks
+                                    View All Places
                                 </Text>
                             </View>
                             <Icon as={ChevronRight} />

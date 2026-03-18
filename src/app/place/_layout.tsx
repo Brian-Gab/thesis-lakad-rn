@@ -4,7 +4,7 @@ import React from 'react'
 const LandmarkLayout = () => {
     return (
         <Stack>
-            <Stack.Screen options={{ headerTitle: "View Landmarks" }}
+            <Stack.Screen options={{ headerTitle: "Places" }}
                 name='all'
             />
             <Stack.Screen options={{ headerShown: false }}

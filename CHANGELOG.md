@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.1.0...HEAD)
 
 ### Changed
-- Removed "Lakad" heading in the More tab
+- Removed "Lakad" heading in the More 
+- Changed header title of all places screens to "Places" instead of "Landmark"
 
 ### Fixed
 - Fixed an issue where updating display name toast notification shows incorrect title
