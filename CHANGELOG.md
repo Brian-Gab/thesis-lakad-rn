@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.1.0...HEAD)
 
-None
+### Changed
+- Removed "Lakad" heading in the More tab
+
 
 ## [1.2.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.1.0...1.2.0)
 

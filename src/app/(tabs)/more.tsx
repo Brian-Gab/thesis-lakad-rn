@@ -1,5 +1,4 @@
 import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
-import { Heading } from '@/components/ui/heading';
 import { Text } from '@/components/ui/text';
 import { useRouter } from "expo-router";
 import React from 'react';
@@ -72,8 +71,6 @@ function MoreTab() {
                         resizeMode="cover"
                     />
                 </View>
-
-                <Heading size="xl" className="mt-4 text-typography-900">Lakad</Heading>
 
                 {session?.user?.email && (
                     <View className="flex-row items-center mt-1 gap-4">
