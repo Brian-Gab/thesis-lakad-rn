@@ -14,7 +14,6 @@ export const fetchCombinedLandmarks = async (): Promise<Place[]> => {
     const { data: touristLandmarks, error: touristError } = await supabase
         .from('places')
         .select('*, opening_hours(*)')
-        .eq('creation_type', "TOURIST_ATTRACTION")
         .is('deleted_at', null)
         .order('created_at', { ascending: false });
     if (touristError)
