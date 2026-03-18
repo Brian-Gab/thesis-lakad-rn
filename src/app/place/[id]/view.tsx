@@ -358,7 +358,7 @@ export default function LandmarkViewerScreen() {
                     <HStack className="absolute top-12 left-4 right-4 justify-between items-center">
                         <TouchableOpacity
                             onPress={() => router.back()}
-                            className="bg-black/30 p-2 rounded-full blur-md"
+                            className="bg-black/30 w-10 h-10 items-center justify-center rounded-full blur-md"
                         >
                             <ArrowLeft color="white" size={24} />
                         </TouchableOpacity>
@@ -366,13 +366,13 @@ export default function LandmarkViewerScreen() {
                         <HStack space="sm">
                             <TouchableOpacity
                                 onPress={() => setShowImageCredits(true)}
-                                className="bg-black/30 p-2 rounded-full"
+                                className="bg-black/30 w-10 h-10 items-center justify-center rounded-full"
                             >
-                                <Icon as={Info} size="md" className="text-white" />
+                                <Icon as={Info} className="text-white" />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={handleShare}
-                                className="bg-black/30 p-2 rounded-full"
+                                className="bg-black/30 w-10 h-10 items-center justify-center rounded-full"
                             >
                                 <Share2 color="white" size={24} />
                             </TouchableOpacity>
