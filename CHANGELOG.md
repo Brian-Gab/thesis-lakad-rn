@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed bug where optimize button doesn't optimize the itinerary
 - Fixed coordinates text input too crowded due to 
 - Fixed bug where admin cannot update places without an error occuring regarding ALL_LANDMARKS
+- Fixed discard and delete dialogs not rounded enough
 
 ### Added
 - Added fullscreen mode in location selection dialog

@@ -153,18 +153,21 @@ export function LandmarkForm({
         <>
             <AlertDialog isOpen={showDiscardAlert} onClose={() => setShowDiscardAlert(false)}>
                 <AlertDialogBackdrop />
-                <AlertDialogContent>
+                <AlertDialogContent className='rounded-2xl'>
                     <AlertDialogHeader><Heading size="lg">Unsaved Changes</Heading></AlertDialogHeader>
                     <AlertDialogBody className='py-4'>
                         <Text size="sm">Are you sure you want to discard your edits?</Text>
                     </AlertDialogBody>
                     <AlertDialogFooter>
                         <ButtonGroup space="lg" flexDirection='row'>
-                            <Button variant="outline" action="secondary" onPress={() => setShowDiscardAlert(false)}><ButtonText>Stay</ButtonText></Button>
-                            <Button action="negative" onPress={() => {
-                                setShowDiscardAlert(false); setPendingImageData(null); reset(); router.back();
-                            }}
-                            >
+                            <Button variant="outline" action="secondary"
+                                className='rounded-xl'
+                                onPress={() => setShowDiscardAlert(false)}><ButtonText>Stay</ButtonText></Button>
+                            <Button action="negative"
+                                className='rounded-xl'
+                                onPress={() => {
+                                    setShowDiscardAlert(false); setPendingImageData(null); reset(); router.back();
+                                }}>
                                 <ButtonText>Discard</ButtonText>
                             </Button>
                         </ButtonGroup>

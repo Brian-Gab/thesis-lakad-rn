@@ -110,7 +110,7 @@ export default function AdminLandmarkDetailScreen() {
         {/* DELETE CONFIRMATION */}
         <AlertDialog isOpen={showDeleteAlert} onClose={() => setShowDeleteAlert(false)}>
           <AlertDialogBackdrop />
-          <AlertDialogContent>
+          <AlertDialogContent className='rounded-2xl'>
             <AlertDialogHeader>
               <Heading size="lg" className="text-error-600">Archive Landmark?</Heading>
             </AlertDialogHeader>
@@ -121,11 +121,14 @@ export default function AdminLandmarkDetailScreen() {
             </AlertDialogBody>
             <AlertDialogFooter className='mt-3'>
               <ButtonGroup space="lg" flexDirection='row'>
-                <Button variant="outline" action="secondary" onPress={() => setShowDeleteAlert(false)}>
+                <Button variant="outline" action="secondary"
+                  className='rounded-xl'
+                  onPress={() => setShowDeleteAlert(false)}>
                   <ButtonText>Cancel</ButtonText>
                 </Button>
                 <Button
                   action="negative"
+                  className='rounded-xl'
                   onPress={() => {
                     setShowDeleteAlert(false);
                     toggleArchiveMutation.mutate(false);
