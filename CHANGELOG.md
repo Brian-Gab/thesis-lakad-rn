@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.3.0...HEAD)
 
+### Fixed
+- Fixed an issue where the optimized route modal overflows outside the screen for larger itineraries
+
 
 ## [1.3.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.2.1...1.3.0)
 

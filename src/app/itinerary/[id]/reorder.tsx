@@ -556,7 +556,7 @@ function OptimizationResultModal({
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalBackdrop />
-            <ModalContent className='rounded-3xl'>
+            <ModalContent className='rounded-3xl max-h-[80%]'>
                 <ModalHeader>
                     <VStack>
                         <Heading size="lg" className='mb-3'>Optimized Route</Heading>
@@ -576,7 +576,7 @@ function OptimizationResultModal({
                         </VStack>
                     </VStack>
                 </ModalHeader>
-                <ModalBody className='max-h-[90%]'>
+                <ModalBody >
                     <VStack space="sm" className="py-2">
                         {stops.map((stop, index) => (
                             <Animated.View
