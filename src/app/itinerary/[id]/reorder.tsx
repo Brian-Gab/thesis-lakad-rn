@@ -14,8 +14,10 @@ import DraggableFlatList, {
 import { Box } from '@/components/ui/box';
 import { HStack } from '@/components/ui/hstack';
 import { Icon } from '@/components/ui/icon';
+import { Modal, ModalBackdrop, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@/components/ui/modal';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
+import Animated, { LinearTransition, useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 // Custom Components & Logic
 import { Button, ButtonText } from '@/components/ui/button';
@@ -57,6 +59,11 @@ const ReorderScreen = () => {
     const [queryProgress] = useState(0)
 
     const [loadingModalMode, setLoadingModalMode] = useState(LoadingMode.Hidden);
+    const [resultModalData, setResultModalData] = useState<{
+        originalStops: StopWithPlace[];
+        optimizedIds: string[];
+        originalDistance: number;
+    } | null>(null);
 
     const { data: itinerary, isLoading, refetch, } = useQuery({
         queryKey: [QueryKey.ITINERARY_BY_ID, id],
@@ -320,11 +327,13 @@ const ReorderScreen = () => {
                 throw error;
 
             await refetch();
-            showToast({
-                title: "Optimization Complete",
-                description: "The route has been reordered for efficiency.",
-                action: "success"
-            })
+
+            // Show the modal to animate the list change
+            setResultModalData({
+                originalStops: onGoingStops,
+                optimizedIds,
+                originalDistance: itinerary.distance,
+            });
 
         } catch (e: any) {
             showToast({
@@ -378,6 +387,17 @@ const ReorderScreen = () => {
                     <ButtonText>Optimize</ButtonText>
                 </Button>
             </Center>
+
+            {resultModalData && (
+                <OptimizationResultModal
+                    isOpen={!!resultModalData}
+                    onClose={() => setResultModalData(null)}
+                    originalStops={resultModalData.originalStops}
+                    optimizedIds={resultModalData.optimizedIds}
+                    optimizedDistance={itinerary.distance}
+                    originalDistance={resultModalData.originalDistance}
+                />
+            )}
         </>
     );
 };
@@ -422,4 +442,165 @@ function ReorderListItem({
             </VStack>
         </HStack>
     )
+}
+
+function OptimizationResultModal({
+    isOpen,
+    onClose,
+    originalStops,
+    optimizedIds,
+    optimizedDistance,
+    originalDistance,
+}: {
+    isOpen: boolean;
+    onClose: () => void;
+    originalStops: StopWithPlace[];
+    optimizedIds: string[];
+    optimizedDistance: number;
+    originalDistance: number;
+}) {
+    const [stops, setStops] = useState(originalStops);
+    const distanceProgress = useSharedValue(0);
+    const savedScale = useSharedValue(1);
+
+    React.useEffect(() => {
+        if (isOpen) {
+            distanceProgress.value = 0;
+            savedScale.value = 1;
+            setStops(originalStops);
+            // After a short delay, animate list reorder + distance change together
+            const timer = setTimeout(() => {
+                const newOrder = [...originalStops].sort((a, b) => {
+                    const indexA = optimizedIds.indexOf(a.place_id.toString());
+                    const indexB = optimizedIds.indexOf(b.place_id.toString());
+                    return indexA - indexB;
+                });
+                setStops(newOrder);
+                distanceProgress.value = withTiming(1, { duration: 1000 });
+            }, 800);
+            return () => clearTimeout(timer);
+        }
+    }, [isOpen, originalStops, optimizedIds, distanceProgress, savedScale]);
+
+    // Animate distance value between original and optimized
+    const [displayedDistance, setDisplayedDistance] = React.useState(originalDistance);
+    React.useEffect(() => {
+        if (!isOpen) return;
+        setDisplayedDistance(originalDistance);
+        const STEPS = 40;
+        const DELAY = 800;
+        const DURATION = 1000;
+        const stepDuration = DURATION / STEPS;
+        let step = 0;
+        let countInterval: ReturnType<typeof setInterval>;
+        const delayTimer = setTimeout(() => {
+            countInterval = setInterval(() => {
+                step++;
+                const t = step / STEPS;
+                const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                const current = originalDistance + (optimizedDistance - originalDistance) * eased;
+                setDisplayedDistance(current);
+                if (step >= STEPS) clearInterval(countInterval);
+            }, stepDuration);
+        }, DELAY);
+
+        return () => {
+            clearTimeout(delayTimer);
+            clearInterval(countInterval!);
+        };
+    }, [isOpen, originalDistance, optimizedDistance]);
+
+    const distanceSaved = originalDistance - optimizedDistance;
+
+    // Count up the saved distance; spring-bounce the badge once count finishes
+    const [displayedSaved, setDisplayedSaved] = React.useState(0);
+    React.useEffect(() => {
+        if (!isOpen) return;
+        setDisplayedSaved(0);
+        const STEPS = 40;
+        // Starts after: 800ms list delay + 1000ms count-down duration
+        const DELAY = 1800;
+        const DURATION = 600;
+        const stepDuration = DURATION / STEPS;
+        let step = 0;
+        let countInterval: ReturnType<typeof setInterval>;
+        const delayTimer = setTimeout(() => {
+            countInterval = setInterval(() => {
+                step++;
+                const t = step / STEPS;
+                const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                setDisplayedSaved(distanceSaved * eased);
+                if (step >= STEPS) {
+                    clearInterval(countInterval);
+                    setDisplayedSaved(distanceSaved);
+                    // Exactly 2 bounces then stop
+                    savedScale.value = withSequence(
+                        withTiming(1.2, { duration: 130 }),  // bounce 1 up
+                        withTiming(1.0, { duration: 110 }),  // bounce 1 down
+                        withTiming(1.08, { duration: 90 }), // bounce 2 up (smaller)
+                        withTiming(1.0, { duration: 80 }),  // bounce 2 down — done
+                    );
+                }
+            }, stepDuration);
+        }, DELAY);
+        return () => {
+            clearTimeout(delayTimer);
+            clearInterval(countInterval!);
+        };
+    }, [isOpen, distanceSaved, savedScale]);
+
+    const savedAnimStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: savedScale.value }],
+    }));
+
+    return (
+        <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalBackdrop />
+            <ModalContent className='rounded-3xl'>
+                <ModalHeader>
+                    <VStack>
+                        <Heading size="lg" className='mb-3'>Optimized Route</Heading>
+                        <VStack space='xs'>
+                            <Text size='md' className='text-typography-500'>
+                                Distance: {formatDistance(displayedDistance)}
+                            </Text>
+                            {distanceSaved > 0 && (
+                                <Animated.View style={savedAnimStyle}>
+                                    <Box className='mt-1 px-3 py-1 rounded-full bg-success-100 self-start'>
+                                        <Text size='md' className='font-bold text-success-700'>
+                                            🎉 Saved {formatDistance(displayedSaved)}
+                                        </Text>
+                                    </Box>
+                                </Animated.View>
+                            )}
+                        </VStack>
+                    </VStack>
+                </ModalHeader>
+                <ModalBody className='max-h-[90%]'>
+                    <VStack space="sm" className="py-2">
+                        {stops.map((stop, index) => (
+                            <Animated.View
+                                key={stop.id}
+                                layout={LinearTransition.duration(1000).damping(16).stiffness(120)}
+                            >
+                                <HStack space="md" className="items-center bg-background-50 border border-background-100 p-2 rounded-md">
+                                    <Box className="w-8 h-8 rounded-full bg-primary-50 items-center justify-center">
+                                        <Text size="xs" className="font-bold text-primary-900">{index + 1}</Text>
+                                    </Box>
+                                    <VStack className="flex-1">
+                                        <Text size="sm" className="font-semibold" numberOfLines={1}>{stop.place.name}</Text>
+                                    </VStack>
+                                </HStack>
+                            </Animated.View>
+                        ))}
+                    </VStack>
+                </ModalBody>
+                <ModalFooter>
+                    <Button onPress={onClose} className='rounded-xl'>
+                        <ButtonText>Done</ButtonText>
+                    </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal>
+    );
 }
