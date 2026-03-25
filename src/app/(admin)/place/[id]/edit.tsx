@@ -113,7 +113,13 @@ export default function AdminLandmarkEditScreen() {
 
             // TODO: Make sure is_verified first
             if (hasLocationChanged) {
-                const landmarks = await queryClient.fetchQuery<Place[]>({ queryKey: [QueryKey.ALL_LANDMARKS] })
+                const landmarks = await queryClient.fetchQuery<Place[]>({
+                    queryKey: [QueryKey.ALL_LANDMARKS], queryFn: async () => {
+                        const { data, error } = await supabase.rpc('get_places_with_stats')
+                        if (error) throw error;
+                        return data as Place[];
+                    }
+                })
                 const { inbound, outbound, sourceId } = await calculateIncrementalMatrix({
                     newWaypoint: {
                         id: id.toString(),
@@ -161,7 +167,7 @@ export default function AdminLandmarkEditScreen() {
 
             }
 
-            await queryClient.refetchQueries({ queryKey: [QueryKey.ALL_LANDMARKS], });
+            await queryClient.invalidateQueries({ queryKey: [QueryKey.ALL_LANDMARKS], });
             await queryClient.invalidateQueries({ queryKey: [QueryKey.LANDMARK_BY_ID, id] });
             await queryClient.invalidateQueries({ queryKey: [QueryKey.LANDMARK_ANALYTICS_BY_ID, id] });
             await queryClient.invalidateQueries({ queryKey: [QueryKey.ADMIN_ANALYTICS] });
