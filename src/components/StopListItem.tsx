@@ -95,6 +95,7 @@ const StopListItem = ({
                     setIsOpen(true)
                 }}
                 selectionMode="single"
+                className='rounded-xl'
                 isOpen={isOpen}
                 placement="left"
                 trigger={({ ...triggerProps }) => {
@@ -120,6 +121,7 @@ const StopListItem = ({
                 <MenuItem
                     key="Mark as visited" textValue={`Mark as ${isVisited ? 'Unvisited' : 'Visited'}`}
                     onPress={onVisitToggle}
+                    className='rounded-lg'
                 >
                     <Icon as={Check} size="sm" className="mr-2" />
                     <MenuItemLabel size="sm">Mark as {isVisited ? 'Unvisited' : 'Visited'}</MenuItemLabel>
@@ -129,6 +131,7 @@ const StopListItem = ({
                     <MenuItem
                         key="edit_duration" textValue="Edit Visit Duration"
                         onPress={onEditDuration}
+                        className='rounded-lg'
                     >
                         <Icon as={Clock} size="sm" className="mr-2" />
                         <MenuItemLabel size="sm">Edit Visit Duration</MenuItemLabel>
@@ -138,6 +141,7 @@ const StopListItem = ({
                 <MenuItem
                     key="locate" textValue="Locate stop"
                     onPress={onLocate}
+                    className='rounded-lg'
                 >
                     <Icon as={MapPin} size="sm" className="mr-2" />
                     <MenuItemLabel size="sm">Locate Stop</MenuItemLabel>
@@ -145,6 +149,8 @@ const StopListItem = ({
                 <MenuItem
                     key="delete" textValue="Remove stop"
                     onPress={onDelete}
+                    className='rounded-lg'
+
                 >
                     <Icon as={Trash} size="sm" className="mr-2" />
                     <MenuItemLabel size="sm">Remove Stop</MenuItemLabel>
