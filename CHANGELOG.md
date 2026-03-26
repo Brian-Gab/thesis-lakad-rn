@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.3.0...HEAD)
 
+### Added
+- Added support for > 25 navigation waypoints
+
 ### Fixed
 - Fixed an issue where the optimized route modal overflows outside the screen for larger itineraries
 
