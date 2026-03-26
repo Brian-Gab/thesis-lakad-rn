@@ -255,7 +255,7 @@ export function NavigatingModeBottomSheet({
                 <HStack className="p-4 bg-primary-50 rounded-2xl border border-primary-200" space="md">
                     <VStack className="flex-1">
                         <Text size="xs" className="text-primary-600 font-semibold uppercase tracking-wide">
-                            Arrival
+                            Arrive at
                         </Text>
                         <Text size="xl" className="font-bold text-primary-700">
                             {eta}
@@ -264,7 +264,7 @@ export function NavigatingModeBottomSheet({
                     <Divider orientation="vertical" className="h-auto" />
                     <VStack className="flex-1 items-end">
                         <Text size="xs" className="text-primary-600 font-semibold uppercase tracking-wide">
-                            Departure
+                            Resume at
                         </Text>
                         <HStack space="xs" className="items-center">
                             <Text size="xl" className="font-bold text-primary-700">
@@ -302,7 +302,7 @@ export function NavigatingModeBottomSheet({
                             Target: <Text size="sm" className="font-bold text-typography-900">{nextUnvisitedStop?.place.name}</Text>
                         </Text>
                         <Text size="xs" className="text-typography-400">
-                            ({formatDuration(visitDurationSeconds)} visit)
+                            (stay for {formatDuration(visitDurationSeconds)} )
                         </Text>
                     </HStack>
 
