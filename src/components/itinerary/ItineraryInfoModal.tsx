@@ -20,6 +20,7 @@ import { VStack } from '@/components/ui/vstack';
 
 import { Center } from '@/components/ui/center';
 import { QueryKey } from '@/src/constants/QueryKey';
+import useThemeConfig from '@/src/hooks/useThemeConfig';
 import { useToastNotification } from '@/src/hooks/useToastNotification';
 import { useAuthStore } from '@/src/stores/useAuth';
 import { fetchItineraryById } from '@/src/utils/fetchItineraries';
@@ -42,6 +43,7 @@ export const ItineraryInfoModal = ({ isOpen, onClose, itineraryId }: ItineraryIn
     const userId = session?.user.id;
     const queryClient = useQueryClient();
     const router = useRouter();
+    const theme = useThemeConfig()
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
@@ -146,7 +148,7 @@ export const ItineraryInfoModal = ({ isOpen, onClose, itineraryId }: ItineraryIn
                 <ModalBody className="p-4">
                     {isLoading ? (
                         <Box className='py-10 justify-center items-center'>
-                            <ActivityIndicator size="large" color="#4f46e5" />
+                            <ActivityIndicator size="large" color={theme.primary['500']} />
                         </Box>
                     ) : !itinerary ? (
                         <Center className='py-10'>

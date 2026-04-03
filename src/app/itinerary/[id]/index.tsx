@@ -248,7 +248,7 @@ export default function ItineraryView() {
     if (isLoading || !itinerary) {
         return (
             <Box className='flex-1 justify-center items-center bg-background-0'>
-                <ActivityIndicator size="large" color="#007AFF" />
+                <ActivityIndicator size="large" color={theme.primary['500']} />
             </Box>
         );
     }
