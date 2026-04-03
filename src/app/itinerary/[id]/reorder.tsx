@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { Check, Clock, GripVertical } from 'lucide-react-native';
+import { Check, ChevronsDown, Clock, GripVertical } from 'lucide-react-native';
 import React, { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import DraggableFlatList, {
@@ -566,11 +566,14 @@ function OptimizationResultModal({
                             </Text>
                             {distanceSaved > 0 && (
                                 <Animated.View style={savedAnimStyle}>
-                                    <Box className='mt-1 px-3 py-1 rounded-full bg-success-100 self-start'>
+                                    <HStack space='sm' className='mt-1 px-3 py-1 rounded-full bg-success-100 self-start justify-center items-center'>
+                                        <Icon
+                                            as={ChevronsDown}
+                                        />
                                         <Text size='md' className='font-bold text-success-700'>
-                                            🎉 Saved {formatDistance(displayedSaved)}
+                                            Saved {formatDistance(displayedSaved)}
                                         </Text>
-                                    </Box>
+                                    </HStack>
                                 </Animated.View>
                             )}
                         </VStack>
