@@ -145,7 +145,7 @@ export const ItineraryInfoModal = ({ isOpen, onClose, itineraryId }: ItineraryIn
                         <Icon as={X} size="md" className="text-typography-500" />
                     </ModalCloseButton>
                 </ModalHeader>
-                <ModalBody className="p-4">
+                <ModalBody className="p-4" keyboardShouldPersistTaps="handled">
                     {isLoading ? (
                         <Box className='py-10 justify-center items-center'>
                             <ActivityIndicator size="large" color={theme.primary['500']} />
