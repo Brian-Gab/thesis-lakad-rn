@@ -59,7 +59,7 @@ export default function AddPOIScreen() {
 
     const addStopMutation = useMutation({
         mutationFn: async (placeId: number) => {
-            const itinerary = await queryClient.fetchQuery<ItineraryWithStops>({ queryKey: [QueryKey.ITINERARY_BY_ID, itineraryId] });
+            const itinerary = await queryClient.fetchQuery<ItineraryWithStops>({ queryKey: [QueryKey.ITINERARY_BY_ID, Number(itineraryId)] });
 
             if (itinerary.stops.find(stop => stop.place_id === placeId)) {
                 throw new Error("Landmark already in itinerary");
@@ -76,14 +76,14 @@ export default function AddPOIScreen() {
             });
 
             if (Number(currentCount) + 1 > 1) {
-                const itinerary = await queryClient.fetchQuery<ItineraryWithStops>({ queryKey: [QueryKey.ITINERARY_BY_ID, itineraryId] });
+                const itinerary = await queryClient.fetchQuery<ItineraryWithStops>({ queryKey: [QueryKey.ITINERARY_BY_ID, Number(itineraryId)] });
                 const newDistance = await calculateRouteDistanceFromMatrix(itinerary.stops.map(stop => stop.place_id))
                 await supabase.from('itinerary').update({ distance: newDistance }).eq('id', itinerary.id)
             }
         },
         onSuccess: async () => {
             // Invalidate queries so the itinerary refreshes when we go back
-            await queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, itineraryId] });
+            await queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, Number(itineraryId)] });
             await queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARIES, userId!] });
             showToast({ title: "Added to Itinerary", action: "success" });
             router.back();

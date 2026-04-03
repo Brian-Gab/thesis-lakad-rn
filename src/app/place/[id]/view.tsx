@@ -92,7 +92,7 @@ export default function LandmarkViewerScreen() {
         },
         onSuccess: () => {
             // Invalidate queries so the itinerary refreshes when we go back
-            queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, itineraryId] });
+            queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, Number(itineraryId)] });
             showToast({ title: "Added to Itinerary", action: "success" });
             router.dismissAll()
             router.navigate({
@@ -220,7 +220,7 @@ export default function LandmarkViewerScreen() {
             })
             setShowNoItineraryAlert(false);
             showToast({ title: `Added to ${name}`, action: "success" });
-            await queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, itineraryId] });
+            await queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, Number(itineraryId)] });
             router.dismissAll()
             router.navigate({
                 pathname: '/itinerary/[id]',

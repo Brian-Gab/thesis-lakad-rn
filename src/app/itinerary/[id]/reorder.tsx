@@ -66,7 +66,7 @@ const ReorderScreen = () => {
     } | null>(null);
 
     const { data: itinerary, isLoading, refetch, } = useQuery({
-        queryKey: [QueryKey.ITINERARY_BY_ID, id],
+        queryKey: [QueryKey.ITINERARY_BY_ID, Number(id)],
         enabled: !!userId && !!id,
         queryFn: () => fetchItineraryById(userId!, Number.parseInt(id.toString()))
     });

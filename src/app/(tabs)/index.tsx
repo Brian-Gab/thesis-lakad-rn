@@ -172,7 +172,7 @@ const ExploreTab = () => {
             });
             setShowNoItineraryAlert(false);
             showToast({ title: `Added to ${selectedItinerary.name}`, action: "success" });
-            await queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, selectedItinerary.id] });
+            await queryClient.invalidateQueries({ queryKey: [QueryKey.ITINERARY_BY_ID, Number(selectedItinerary.id)] });
 
             router.navigate({
                 pathname: '/itinerary/[id]',
