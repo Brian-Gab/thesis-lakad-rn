@@ -9,7 +9,7 @@ import {
 } from '@rnmapbox/maps';
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { Edit } from 'lucide-react-native';
-import React, { useCallback, useEffect, useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef } from 'react';
 import { ActivityIndicator, BackHandler } from 'react-native';
 
 // UI Components
@@ -171,6 +171,15 @@ export default function ItineraryView() {
         isLoading: isVisualizationLoading,
         isVisualizing
     } = useVisualizationLogic(mode, switchMode, userLocation, pendingStops);
+
+    const bottomSheetScrollViewRef = useRef<any>(null);
+
+    // Reset scroll position when bottom sheet closes
+    useEffect(() => {
+        if (!isSheetOpen && bottomSheetScrollViewRef.current) {
+            bottomSheetScrollViewRef.current.scrollTo({ y: 0, animated: false });
+        }
+    }, [isSheetOpen]);
 
     // Auto-center camera on user location during navigation
     useEffect(() => {
@@ -407,7 +416,7 @@ export default function ItineraryView() {
                     enableDynamicSizing={false}
                     enablePanDownToClose={mode !== Mode.Navigating}
                 >
-                    <BottomSheetScrollView>
+                    <BottomSheetScrollView ref={bottomSheetScrollViewRef}>
                         <ViewingModeBottomSheet
                             itinerary={itinerary}
                             mode={mode}
