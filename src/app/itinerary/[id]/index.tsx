@@ -9,7 +9,7 @@ import {
 } from '@rnmapbox/maps';
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import { Edit } from 'lucide-react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import { ActivityIndicator, BackHandler } from 'react-native';
 
 // UI Components
@@ -49,14 +49,42 @@ import { useQueryClient } from '@tanstack/react-query';
 
 const headingArrow = require('@/assets/images/arrow.png');
 
+type UIState = {
+    isCardViewOpened: boolean;
+    isInfoModalOpen: boolean;
+    localStops: ItineraryWithStops['stops'];
+};
+
+type UIAction =
+    | { type: 'OPEN_CARD_VIEW'; payload: ItineraryWithStops['stops'] }
+    | { type: 'CLOSE_CARD_VIEW' }
+    | { type: 'SET_INFO_MODAL_OPEN'; payload: boolean };
+
+const initialUIState: UIState = {
+    isCardViewOpened: false,
+    isInfoModalOpen: false,
+    localStops: [],
+};
+
+function uiReducer(state: UIState, action: UIAction): UIState {
+    switch (action.type) {
+        case 'OPEN_CARD_VIEW':
+            return { ...state, isCardViewOpened: true, localStops: action.payload };
+        case 'CLOSE_CARD_VIEW':
+            return { ...state, isCardViewOpened: false, localStops: [] };
+        case 'SET_INFO_MODAL_OPEN':
+            return { ...state, isInfoModalOpen: action.payload };
+        default:
+            return state;
+    }
+}
 
 export default function ItineraryView() {
     const { id, autoOpenCardView } = useLocalSearchParams();
     const router = useRouter();
     const { showToast } = useToastNotification();
-    const [isCardViewOpened, setIsCardViewOpened] = useState(false)
-    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-    const [localStops, setLocalStops] = useState<ItineraryWithStops['stops']>([])
+    const [uiState, dispatch] = useReducer(uiReducer, initialUIState);
+    const { isCardViewOpened, isInfoModalOpen, localStops } = uiState;
     const queryClient = useQueryClient()
     const { session } = useAuthStore();
     const userId = session?.user?.id;
@@ -172,15 +200,13 @@ export default function ItineraryView() {
 
     const openCardView = useCallback(() => {
         if (!itinerary) return;
-        setLocalStops(itinerary.stops)
+        dispatch({ type: 'OPEN_CARD_VIEW', payload: itinerary.stops });
         setIsSheetOpen(false);
-        setIsCardViewOpened(true);
-    }, [itinerary, setIsSheetOpen])
+    }, [itinerary, setIsSheetOpen]);
 
     const closeCardView = useCallback(() => {
-        setLocalStops([])
+        dispatch({ type: 'CLOSE_CARD_VIEW' });
         setIsSheetOpen(true);
-        setIsCardViewOpened(false);
     }, [setIsSheetOpen]);
 
     useEffect(() => {
@@ -198,7 +224,7 @@ export default function ItineraryView() {
                     return true;
                 }
                 if (isInfoModalOpen) {
-                    setIsInfoModalOpen(false);
+                    dispatch({ type: 'SET_INFO_MODAL_OPEN', payload: false });
                     return true;
                 }
                 if (mode !== Mode.Viewing) {
@@ -245,17 +271,16 @@ export default function ItineraryView() {
     };
 
     const onStopPress = (stop: StopWithPlace) => {
-        setLocalStops([stop])
-        setIsSheetOpen(false)
-        setIsCardViewOpened(true)
-    }
+        dispatch({ type: 'OPEN_CARD_VIEW', payload: [stop] });
+        setIsSheetOpen(false);
+    };
     return (
         <>
             <Stack.Screen
                 options={{
                     headerRight: () => (
                         <Button variant="link"
-                            onPress={() => setIsInfoModalOpen(true)}
+                            onPress={() => dispatch({ type: 'SET_INFO_MODAL_OPEN', payload: true })}
                             action='secondary'
                         >
                             <ButtonIcon as={Edit} />
@@ -280,7 +305,7 @@ export default function ItineraryView() {
 
             <ItineraryInfoModal
                 isOpen={isInfoModalOpen}
-                onClose={() => setIsInfoModalOpen(false)}
+                onClose={() => dispatch({ type: 'SET_INFO_MODAL_OPEN', payload: false })}
                 itineraryId={itinerary.id}
             />
 
