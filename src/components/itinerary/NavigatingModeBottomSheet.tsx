@@ -305,7 +305,10 @@ export function NavigatingModeBottomSheet({
                         </Text>
                     </HStack>
 
-                    <Button size='sm' onPress={onArrive}>
+                    <Button
+                        className='rounded-xl'
+                        onPress={onArrive}
+                    >
                         <ButtonText>Mark as Arrived</ButtonText>
                         <ButtonIcon as={CheckCircle} />
                     </Button>
