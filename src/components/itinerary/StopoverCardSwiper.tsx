@@ -37,17 +37,18 @@ const SwipeableCard = forwardRef(({ stop, onSwipeLeftConfirmed, onSwipeRightConf
 
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
+    const OUT_OF_SCREEN_DISTANCE = SCREEN_WIDTH * 1.5;
 
     useImperativeHandle(ref, () => ({
         swipeLeft: () => {
-            translateX.value = withTiming(-SCREEN_WIDTH, { duration: 200 }, (finished) => {
+            translateX.value = withTiming(-OUT_OF_SCREEN_DISTANCE, { duration: 200 }, (finished) => {
                 if (finished) {
                     scheduleOnRN(onSwipeLeftConfirmed);
                 }
             });
         },
         swipeRight: () => {
-            translateX.value = withTiming(SCREEN_WIDTH, { duration: 200 }, (finished) => {
+            translateX.value = withTiming(OUT_OF_SCREEN_DISTANCE, { duration: 200 }, (finished) => {
                 if (finished) {
                     scheduleOnRN(onSwipeRightConfirmed);
                 }
@@ -64,7 +65,7 @@ const SwipeableCard = forwardRef(({ stop, onSwipeLeftConfirmed, onSwipeRightConf
             if (Math.abs(event.translationX) > TRANSLATION_X_THRESHOLD) {
                 const isSwipingRight = event.translationX > 0;
                 translateX.value = withTiming(
-                    isSwipingRight ? SCREEN_WIDTH : -SCREEN_WIDTH,
+                    isSwipingRight ? OUT_OF_SCREEN_DISTANCE : -OUT_OF_SCREEN_DISTANCE,
                     { duration: 200 },
                     (finished) => {
                         if (finished) {
