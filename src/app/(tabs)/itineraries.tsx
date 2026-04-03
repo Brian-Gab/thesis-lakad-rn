@@ -275,14 +275,14 @@ export default function ItinerariesScreen() {
                 }}
             >
                 <AlertDialogBackdrop />
-                <AlertDialogContent>
+                <AlertDialogContent className='rounded-3xl'>
                     <AlertDialogHeader>
                         <Heading size="md" className="text-typography-950">
                             Delete Itinerary
                         </Heading>
                     </AlertDialogHeader>
                     <AlertDialogBody className="mt-3 mb-4">
-                        <Text size="sm">
+                        <Text >
                             Are you sure you want to move this itinerary to trash?
                         </Text>
                     </AlertDialogBody>
@@ -290,19 +290,19 @@ export default function ItinerariesScreen() {
                         <Button
                             variant="outline"
                             action="secondary"
+                            className='rounded-xl'
                             onPress={() => {
                                 setShowAlertDialog(false);
                                 setItineraryToDelete(null);
                             }}
-                            size="sm"
                             isDisabled={isDeleting}
                         >
                             <ButtonText>Cancel</ButtonText>
                         </Button>
                         <Button
-                            size="sm"
                             action="negative"
                             onPress={confirmDelete}
+                            className='rounded-xl'
                             isDisabled={isDeleting}
                         >
                             {isDeleting && <ButtonSpinner color='#fff' className='mr-2' />}
