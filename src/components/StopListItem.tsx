@@ -2,12 +2,11 @@ import { Box } from '@/components/ui/box';
 import { Button, ButtonIcon } from '@/components/ui/button';
 import { HStack } from '@/components/ui/hstack';
 import { Icon } from '@/components/ui/icon';
-import { Menu, MenuItem, MenuItemLabel } from '@/components/ui/menu';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { Check, Clock, EllipsisVertical, MapPin, Trash } from 'lucide-react-native';
+import { Check, ChevronDown, ChevronUp, Clock, MapPin, Trash } from 'lucide-react-native';
 import React, { useState } from 'react';
-import { Pressable } from 'react-native';
+import { LayoutAnimation, Pressable, TouchableOpacity } from 'react-native';
 import { Place } from '../model/places.types';
 import { formatDuration } from '../utils/format/time';
 
@@ -32,131 +31,110 @@ const StopListItem = ({
     visitDuration?: number,
     onEditDuration?: () => void,
 }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const isPersonal = landmark.creation_type === "PERSONAL";
     const formattedDuration = visitDuration ? formatDuration(visitDuration) : null;
 
+    const toggleExpand = () => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setIsExpanded(!isExpanded);
+    };
+
     return (
-        <Pressable onPress={onPress}
-            className='flex-row items-center justify-between'
-        >
-            <HStack space='md' className='flex-1 items-center min-w-0'>
-                <Box className={`w-8 h-8 rounded-full items-center justify-center ${isVisited ? 'bg-success-500' : 'bg-background-100'}`}>
-                    {isVisited ? (
-                        <Icon as={Check} size="xs" />
-                    ) : (
-                        <Text size='xs' className='font-bold text-typography-900'>
-                            {displayNumber}
-                        </Text>
-                    )}
-                </Box>
-
-                <VStack className='flex-1 '>
-                    <HStack space="xs" className="items-center">
-                        <Text
-                            className={`font-semibold ${isVisited ? 'text-typography-300 line-through' : 'text-typography-900'}`}
-                            numberOfLines={1}
-                            ellipsizeMode="tail"
-                        >
-                            {landmark.name}
-                        </Text>
-                    </HStack>
-
-                    <HStack space="xs" className="items-center">
-                        <Icon as={MapPin} size="sm" className="text-typography-400" />
-                        <Text
-                            className="text-typography-400"
-                            numberOfLines={1}
-                            ellipsizeMode="tail"
-                            size="sm"
-                        >
-                            {isPersonal ? "Custom" : landmark.municipality}
-                        </Text>
-                        {formattedDuration && (
-                            <>
-                                <Icon as={Clock} size="sm" className="text-typography-400" />
-                                <Text className="text-typography-400"
-                                    size="sm"
-                                >
-                                    Stay: {formattedDuration}
-                                </Text>
-                            </>
-                        )}
-                    </HStack>
-                </VStack>
-            </HStack>
-
-            <Menu
-                onClose={() => {
-                    setIsOpen(false)
-                }}
-                onOpen={() => {
-                    setIsOpen(true)
-                }}
-                selectionMode="single"
-                className='rounded-xl'
-                isOpen={isOpen}
-                placement="left"
-                trigger={({ ...triggerProps }) => {
-                    return (
-                        <Button
-                            variant='link'
-                            action='secondary'
-                            {...triggerProps}
-                            onPress={() => {
-                                setIsOpen(true)
-                                // bug in gluestack
-                                triggerProps.onPress()
-                            }}
-                        >
-                            <ButtonIcon as={EllipsisVertical} />
-                        </Button>
-                    );
-                }}
-                onSelectionChange={(s) => {
-                    setIsOpen(false)
-                }}
+        <VStack>
+            <Pressable onPress={onPress}
+                className='flex-row items-center justify-between'
             >
-                <MenuItem
-                    key="Mark as visited" textValue={`Mark as ${isVisited ? 'Unvisited' : 'Visited'}`}
-                    onPress={onVisitToggle}
-                    className='rounded-lg'
-                >
-                    <Icon as={Check} size="sm" className="mr-2" />
-                    <MenuItemLabel size="sm">Mark as {isVisited ? 'Unvisited' : 'Visited'}</MenuItemLabel>
-                </MenuItem>
+                <HStack space='md' className='flex-1 items-center min-w-0'>
+                    <Box className={`w-8 h-8 rounded-full items-center justify-center ${isVisited ? 'bg-success-500' : 'bg-background-100'}`}>
+                        {isVisited ? (
+                            <Icon as={Check} size="xs" />
+                        ) : (
+                            <Text size='xs' className='font-bold text-typography-900'>
+                                {displayNumber}
+                            </Text>
+                        )}
+                    </Box>
 
-                {onEditDuration && (
-                    <MenuItem
-                        key="edit_duration" textValue="Edit Visit Duration"
-                        onPress={onEditDuration}
-                        className='rounded-lg'
-                    >
-                        <Icon as={Clock} size="sm" className="mr-2" />
-                        <MenuItemLabel size="sm">Edit Visit Duration</MenuItemLabel>
-                    </MenuItem>
-                )}
+                    <VStack className='flex-1 '>
+                        <HStack space="xs" className="items-center">
+                            <Text
+                                className={`font-semibold ${isVisited ? 'text-typography-300 line-through' : 'text-typography-900'}`}
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                            >
+                                {landmark.name}
+                            </Text>
+                        </HStack>
 
-                <MenuItem
-                    key="locate" textValue="Locate stop"
-                    onPress={onLocate}
-                    className='rounded-lg'
-                >
-                    <Icon as={MapPin} size="sm" className="mr-2" />
-                    <MenuItemLabel size="sm">Locate Stop</MenuItemLabel>
-                </MenuItem>
-                <MenuItem
-                    key="delete" textValue="Remove stop"
-                    onPress={onDelete}
-                    className='rounded-lg'
+                        <HStack space="xs" className="items-center">
+                            <Icon as={MapPin} size="sm" className="text-typography-400" />
+                            <Text
+                                className="text-typography-400"
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                                size="sm"
+                            >
+                                {isPersonal ? "Custom" : landmark.municipality}
+                            </Text>
+                            {formattedDuration && (
+                                <>
+                                    <Icon as={Clock} size="sm" className="text-typography-400" />
+                                    <Text className="text-typography-400"
+                                        size="sm"
+                                    >
+                                        Stay: {formattedDuration}
+                                    </Text>
+                                </>
+                            )}
+                        </HStack>
+                    </VStack>
+                </HStack>
 
+                <Button
+                    variant='link'
+                    action='secondary'
+                    onPress={toggleExpand}
                 >
-                    <Icon as={Trash} size="sm" className="mr-2" />
-                    <MenuItemLabel size="sm">Remove Stop</MenuItemLabel>
-                </MenuItem>
-            </Menu>
-        </Pressable>
+                    <ButtonIcon as={isExpanded ? ChevronUp : ChevronDown} />
+                </Button>
+            </Pressable>
+
+            {isExpanded && (
+                <HStack className='pt-3 mt-3 border-t border-outline-100 justify-around items-center'>
+                    <TouchableOpacity onPress={() => { toggleExpand(); onVisitToggle(); }} className='items-center w-16'>
+                        <Box className='bg-background-100 p-2.5 rounded-full mb-1.5'>
+                            <Icon as={Check} size='md' className={isVisited ? 'text-typography-500' : 'text-primary-600'} />
+                        </Box>
+                        <Text size='2xs' className='text-typography-600 font-medium text-center'>{isVisited ? 'Unvisit' : 'Visited'}</Text>
+                    </TouchableOpacity>
+
+                    {onEditDuration && (
+                        <TouchableOpacity onPress={() => { toggleExpand(); onEditDuration(); }} className='items-center w-16'>
+                            <Box className='bg-background-100 p-2.5 rounded-full mb-1.5'>
+                                <Icon as={Clock} size='md' className='text-primary-600' />
+                            </Box>
+                            <Text size='2xs' className='text-typography-600 font-medium text-center'>Stay</Text>
+                        </TouchableOpacity>
+                    )}
+
+                    <TouchableOpacity onPress={() => { toggleExpand(); onLocate(); }} className='items-center w-16'>
+                        <Box className='bg-background-100 p-2.5 rounded-full mb-1.5'>
+                            <Icon as={MapPin} size='md' className='text-primary-600' />
+                        </Box>
+                        <Text size='2xs' className='text-typography-600 font-medium text-center'>Locate</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => { toggleExpand(); onDelete(); }} className='items-center w-16'>
+                        <Box className='bg-error-50 p-2.5 rounded-full mb-1.5'>
+                            <Icon as={Trash} size='md' className='text-error-600' />
+                        </Box>
+                        <Text size='2xs' className='text-error-600 font-medium text-center'>Remove</Text>
+                    </TouchableOpacity>
+                </HStack>
+            )}
+        </VStack>
     )
 }
 
