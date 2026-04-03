@@ -426,7 +426,12 @@ export default function ItineraryView() {
                             navigationRoute={navigationRoute}
                             mode={mode}
                             nextUnvisitedStop={nextUnvisitedStop}
-                            exitNavigationMode={() => switchMode(Mode.Viewing)}
+                            exitNavigationMode={() => {
+                                setIsSheetOpen(false);
+                                setTimeout(() => {
+                                    switchMode(Mode.Viewing);
+                                }, 50)
+                            }}
                             navigationProfile={navigationProfile}
                             setNavigationProfile={setNavigationProfile}
                             avoidTolls={avoidTolls}
