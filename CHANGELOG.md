@@ -16,10 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed the stop menu from popover to an accordion
 - Changed behavior of pressing the itinerary stop item to open the stop item accordion
 - Replaced emoji with ChevronsDown in the 'saved distance' in reorder screen
+- Improved the ui/ux of itinerary viewing mode bottom sheet (added stats, connecting lines for stops, clearly separated completed and pending stops)
+- Changed the loading indicator to use the app's primary color
+- Changed `Marked as Arrived` button border radius to fit the app
+- Moved the next up stop ui after the steps in navigating mode
 
 ### Fixed
 - Reduced laggy/jittery ui of the itinerary screen
 - Fixed itinerary card still visible after swiping
+- Fixed icon not visible on main instruction on navigating mode
+- Fixed target text overflowing outside the container on navigating mode
+- Fixed bottom sheet slow transitionwhen  switching from navigating mode to viewing mode
 
 
 ## [1.3.1](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.3.0...1.3.1)
