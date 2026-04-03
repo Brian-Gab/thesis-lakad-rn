@@ -294,20 +294,21 @@ export function NavigatingModeBottomSheet({
                     </HStack>
                 </Box>
 
-                <VStack className="items-center justify-between" space="sm">
-                    <HStack space="sm" className='items-center'>
+                <VStack className="w-full" space="md">
+                    <HStack space="md" className='items-center px-1'>
                         <Icon as={CheckCircle} size="sm" className="text-success-500" />
-                        <Text size="sm" className="text-typography-500 font-medium">
+                        <Text size="sm" className="text-typography-500 font-medium flex-1">
                             Target: <Text size="sm" className="font-bold text-typography-900">{nextUnvisitedStop?.place.name}</Text>
-                        </Text>
-                        <Text size="xs" className="text-typography-400">
-                            (stay for {formatDuration(visitDurationSeconds)} )
+                            <Text size="xs" className="text-typography-400">
+                                {" "}(stay for {formatDuration(visitDurationSeconds)} )
+                            </Text>
                         </Text>
                     </HStack>
 
                     <Button
                         className='rounded-xl'
                         onPress={onArrive}
+                        size="lg"
                     >
                         <ButtonText>Mark as Arrived</ButtonText>
                         <ButtonIcon as={CheckCircle} />
