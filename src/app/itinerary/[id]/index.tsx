@@ -270,7 +270,7 @@ export default function ItineraryView() {
         }
     };
 
-    const onStopPress = (stop: StopWithPlace) => {
+    const onShowStopInfo = (stop: StopWithPlace) => {
         dispatch({ type: 'OPEN_CARD_VIEW', payload: [stop] });
         setIsSheetOpen(false);
     };
@@ -378,7 +378,7 @@ export default function ItineraryView() {
                     <ViewingModeMapView
                         stops={mode === Mode.Visualizing ? pendingStops : itinerary.stops}
                         show={mode === Mode.Viewing || mode === Mode.Visualizing}
-                        onStopPress={mode === Mode.Visualizing ? () => { } : onStopPress}
+                        onStopPress={mode === Mode.Visualizing ? () => { } : onShowStopInfo}
                         selectedStopIds={mode === Mode.Visualizing ? currentLegStopIds : undefined}
                     />
 
@@ -420,7 +420,7 @@ export default function ItineraryView() {
                             pendingStops={pendingStops}
                             completedStops={completedStops}
                             onCardViewOpen={openCardView}
-                            onStopPress={onStopPress}
+                            onShowStopInfo={onShowStopInfo}
                         />
                         <NavigatingModeBottomSheet
                             navigationRoute={navigationRoute}

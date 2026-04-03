@@ -3,15 +3,15 @@ import { useRouter } from 'expo-router';
 import {
     ArrowDownUp,
     Clock,
+    Eye,
     ListCheck,
     Navigation,
-    Eye,
     PlusCircle,
     Ruler,
     SquareStack
 } from 'lucide-react-native';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { ScrollView, View, TouchableOpacity } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { Mode } from '@/src/hooks/itinerary/useNavigationState';
 import { useToastNotification } from '@/src/hooks/useToastNotification';
@@ -49,7 +49,7 @@ interface ViewingModeBottomSheetProps {
     goNavigationMode: () => void;
     startVisualization: () => void;
     onCardViewOpen: (a: boolean) => void,
-    onStopPress: (stop: StopWithPlace) => void,
+    onShowStopInfo: (stop: StopWithPlace) => void,
 }
 
 export function ViewingModeBottomSheet({
@@ -63,7 +63,7 @@ export function ViewingModeBottomSheet({
     goNavigationMode,
     startVisualization,
     onCardViewOpen,
-    onStopPress,
+    onShowStopInfo,
 }: ViewingModeBottomSheetProps) {
     const scrollViewRef = useRef<ScrollView>(null);
     const router = useRouter();
@@ -238,7 +238,7 @@ export function ViewingModeBottomSheet({
                 </HStack>
                 <Divider />
                 <VStack className='px-4 w-full' space="md">
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         className={`flex-row justify-center items-center py-3.5 rounded-2xl bg-primary-600 ${pendingStops.length < 1 ? 'opacity-50' : ''}`}
                         onPress={goNavigationMode}
                         disabled={pendingStops.length < 1}
@@ -250,7 +250,7 @@ export function ViewingModeBottomSheet({
 
                     {itinerary.stops.length > 0 && (
                         <HStack className='w-full' space="md">
-                            <TouchableOpacity 
+                            <TouchableOpacity
                                 className={`flex-1 items-center justify-center py-3.5 rounded-2xl border border-outline-100 bg-background-0 ${pendingStops.length < 1 ? 'opacity-50' : ''}`}
                                 onPress={startVisualization}
                                 disabled={pendingStops.length < 1}
@@ -260,7 +260,7 @@ export function ViewingModeBottomSheet({
                                 <Text size="xs" className='font-semibold text-typography-600'>Visualize</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity 
+                            <TouchableOpacity
                                 className={`flex-1 items-center justify-center py-3.5 rounded-2xl border border-outline-100 bg-background-0 ${pendingStops.length < 2 ? 'opacity-50' : ''}`}
                                 onPress={handleReorderPress}
                                 disabled={pendingStops.length < 2}
@@ -270,7 +270,7 @@ export function ViewingModeBottomSheet({
                                 <Text size="xs" className='font-semibold text-typography-600'>Reorder</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity 
+                            <TouchableOpacity
                                 className='flex-1 items-center justify-center py-3.5 rounded-2xl border border-outline-100 bg-background-0'
                                 onPress={() => onCardViewOpen(true)}
                                 activeOpacity={0.7}
@@ -296,7 +296,7 @@ export function ViewingModeBottomSheet({
                                 onVisitToggle={() => handleVisitedPress(item)}
                                 onDelete={() => handleRemoveStop(item.id)}
                                 onLocate={() => locatePOI(item.place.longitude, item.place.latitude)}
-                                onPress={() => onStopPress(item)}
+                                onShowStopInfo={() => onShowStopInfo(item)}
                                 visitDuration={item.visit_duration}
                                 onEditDuration={() => setEditingStop(item)}
                             />

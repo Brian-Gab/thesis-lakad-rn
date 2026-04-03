@@ -4,7 +4,7 @@ import { HStack } from '@/components/ui/hstack';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { VStack } from '@/components/ui/vstack';
-import { Check, ChevronDown, ChevronUp, Clock, MapPin, Trash } from 'lucide-react-native';
+import { Check, ChevronDown, ChevronUp, Clock, Info, MapPin, Trash } from 'lucide-react-native';
 import React, { useState } from 'react';
 import { LayoutAnimation, Pressable, TouchableOpacity } from 'react-native';
 import { Place } from '../model/places.types';
@@ -17,7 +17,7 @@ const StopListItem = ({
     onDelete,
     displayNumber,
     onLocate,
-    onPress,
+    onShowStopInfo,
     visitDuration,
     onEditDuration,
 }: {
@@ -27,7 +27,7 @@ const StopListItem = ({
     onDelete: () => void,
     displayNumber: number,
     onLocate: () => void,
-    onPress: () => void,
+    onShowStopInfo: () => void,
     visitDuration?: number,
     onEditDuration?: () => void,
 }) => {
@@ -43,7 +43,7 @@ const StopListItem = ({
 
     return (
         <VStack>
-            <Pressable onPress={onPress}
+            <Pressable onPress={toggleExpand}
                 className='flex-row items-center justify-between'
             >
                 <HStack space='md' className='flex-1 items-center min-w-0'>
@@ -124,6 +124,13 @@ const StopListItem = ({
                             <Icon as={MapPin} size='md' className='text-primary-600' />
                         </Box>
                         <Text size='2xs' className='text-typography-600 font-medium text-center'>Locate</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => { toggleExpand(); onShowStopInfo(); }} className='items-center w-16'>
+                        <Box className='bg-background-100 p-2.5 rounded-full mb-1.5'>
+                            <Icon as={Info} size='md' className='text-primary-600' />
+                        </Box>
+                        <Text size='2xs' className='text-typography-600 font-medium text-center'>Info</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => { toggleExpand(); onDelete(); }} className='items-center w-16'>
