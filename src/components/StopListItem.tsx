@@ -1,5 +1,7 @@
+import { AlertDialog, AlertDialogBackdrop, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonIcon } from '@/components/ui/button';
+import { Button, ButtonIcon, ButtonText } from '@/components/ui/button';
+import { Heading } from '@/components/ui/heading';
 import { HStack } from '@/components/ui/hstack';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
@@ -32,6 +34,7 @@ const StopListItem = ({
     onEditDuration?: () => void,
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     const isPersonal = landmark.creation_type === "PERSONAL";
     const formattedDuration = visitDuration ? formatDuration(visitDuration) : null;
@@ -133,7 +136,7 @@ const StopListItem = ({
                         <Text size='2xs' className='text-typography-600 font-medium text-center'>Info</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => { toggleExpand(); onDelete(); }} className='items-center w-16'>
+                    <TouchableOpacity onPress={() => { toggleExpand(); setShowDeleteDialog(true); }} className='items-center w-16'>
                         <Box className='bg-error-50 p-2.5 rounded-full mb-1.5'>
                             <Icon as={Trash} size='md' className='text-error-600' />
                         </Box>
@@ -141,6 +144,46 @@ const StopListItem = ({
                     </TouchableOpacity>
                 </HStack>
             )}
+            {/* Deletion Confirmation Modal */}
+            <AlertDialog
+                isOpen={showDeleteDialog}
+                onClose={() => setShowDeleteDialog(false)}
+                size="md"
+            >
+                <AlertDialogBackdrop />
+                <AlertDialogContent className='rounded-3xl'>
+                    <AlertDialogHeader>
+                        <Heading size="md" className="text-typography-950 font-semibold">
+                            Remove Stop
+                        </Heading>
+                    </AlertDialogHeader>
+                    <AlertDialogBody className="mt-3 mb-4">
+                        <Text size="sm">
+                            Are you sure you want to remove <Text size="sm" className='font-bold text-typography-900'>{landmark.name}</Text> from your itinerary?
+                        </Text>
+                    </AlertDialogBody>
+                    <AlertDialogFooter className="gap-3">
+                        <Button
+                            variant="outline"
+                            action="secondary"
+                            className='rounded-xl'
+                            onPress={() => setShowDeleteDialog(false)}
+                        >
+                            <ButtonText>Cancel</ButtonText>
+                        </Button>
+                        <Button
+                            action="negative"
+                            className='rounded-xl'
+                            onPress={() => {
+                                setShowDeleteDialog(false);
+                                onDelete();
+                            }}
+                        >
+                            <ButtonText>Remove</ButtonText>
+                        </Button>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </VStack>
     )
 }
