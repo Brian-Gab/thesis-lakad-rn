@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Changed chevron icon in itinerary viewing mode bottom sheet to chevron up when travel history is expanded
+- Conditionally render pending stops heading
+- Decoupled visualization logic from viewing mode 
+- Removed fetching progress percentage in reorder screen
+
+### Fixed
+- Fixed itinerary viewing mode bottom sheet vertical spacing between elements
+- Fixed bug where itinerary data is not locally updated after adding a stop
+- Fixed bug where bottomsheet closes and then reopens, the scroll position interferes with the expansion
+- Fixed issue where keyboard input blocks user interaction for itinerary info modal\
+- Fixed tts still speaking after exiting navigation
+
 ## [1.4.0](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.3.1...1.4.0)
 
 ### Added
