@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### [1.4.2](https://github.com/niceWizzard/thesis-lakad-rn/compare/1.4.1...1.4.2)
+
 ### Changed
 - Standardized coordinate precision to 8 decimal places in admin landmark form
 - Format lat/long to 8 decimal digits
