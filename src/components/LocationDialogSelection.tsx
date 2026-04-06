@@ -36,8 +36,8 @@ export function LocationDialogSelection({
 
     useEffect(() => {
         if (selectedLocation) {
-            setLngInput(prev => parseFloat(prev) === selectedLocation[0] ? prev : Number(selectedLocation[0].toFixed(6)).toString());
-            setLatInput(prev => parseFloat(prev) === selectedLocation[1] ? prev : Number(selectedLocation[1].toFixed(6)).toString());
+            setLngInput(prev => parseFloat(prev) === selectedLocation[0] ? prev : Number(selectedLocation[0].toFixed(8)).toString());
+            setLatInput(prev => parseFloat(prev) === selectedLocation[1] ? prev : Number(selectedLocation[1].toFixed(8)).toString());
         }
     }, [selectedLocation]);
 

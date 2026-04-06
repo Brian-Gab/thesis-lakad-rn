@@ -72,11 +72,14 @@ export default function AdminLandmarkEditScreen() {
                 }
             }
 
+            const lat = parseFloat(Number(formData.latitude).toFixed(8));
+            const lng = parseFloat(Number(formData.longitude).toFixed(8));
+
             const { error } = await supabase.from('places').update({
                 name: formData.name,
                 description: formData.description,
-                latitude: parseFloat(formData.latitude),
-                longitude: parseFloat(formData.longitude),
+                latitude: lat,
+                longitude: lng,
                 type: formData.is_verified !== false ? formData.type : null,
                 unverified_type: formData.is_verified === false ? formData.unverified_type : null,
                 district: formData.district,
@@ -123,7 +126,7 @@ export default function AdminLandmarkEditScreen() {
                 const { inbound, outbound, sourceId } = await calculateIncrementalMatrix({
                     newWaypoint: {
                         id: id.toString(),
-                        coords: [parseFloat(formData.longitude), parseFloat(formData.latitude)],
+                        coords: [lng, lat],
                     },
                     existingWaypoints: landmarks.filter(v => v.id !== Number(id)).map(v => ({
                         coords: [v.longitude, v.latitude],

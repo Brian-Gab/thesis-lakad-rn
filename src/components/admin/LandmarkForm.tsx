@@ -68,8 +68,8 @@ export function LandmarkForm({
             ...initialData,
             type: initialData.type || undefined,
             unverified_type: initialData.unverified_type || undefined,
-            latitude: initialData.latitude.toString(),
-            longitude: initialData.longitude.toString(),
+            latitude: initialData.latitude.toFixed(8).replace(/\.?0+$/, ''),
+            longitude: initialData.longitude.toFixed(8).replace(/\.?0+$/, ''),
             gmaps_rating: initialData.gmaps_rating.toString(),
             description: initialData.description || '',
             externalImageUrl: '',
@@ -183,8 +183,8 @@ export function LandmarkForm({
                 show={isMapSelectionOpen}
                 onClose={() => setIsMapSelectionOpen(false)}
                 onConfirmLocation={(coords) => {
-                    setValue('longitude', coords[0].toString(), { shouldValidate: true, shouldDirty: true, });
-                    setValue('latitude', coords[1].toString(), { shouldValidate: true, shouldDirty: true, });
+                    setValue('longitude', coords[0].toFixed(8).replace(/\.?0+$/, ''), { shouldValidate: true, shouldDirty: true, });
+                    setValue('latitude', coords[1].toFixed(8).replace(/\.?0+$/, ''), { shouldValidate: true, shouldDirty: true, });
                     setIsMapSelectionOpen(false);
                 }}
                 initialLocation={isValidCoordinates ? [Number(longitude), Number(latitude)] : undefined}
